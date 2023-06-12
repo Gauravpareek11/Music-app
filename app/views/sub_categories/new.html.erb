@@ -1,0 +1,13 @@
+<%= form_with model: @sub_categories,url:admin_sub_categories_path(current_user.id) do |form| %>
+  <div class="mb-3">
+    <%= form.label :item,class:"form-label" %><br>
+    <%= form.text_field :items,class:"form-control" %>
+  </div>
+  <div>
+    <%= form.label :category %>
+    <%= form.select :category_id, options_for_select(Category.all.map { |category| [category.products, category.id,]}),prompt: "-Please Select-"%>
+</div>
+  <div>
+    <%= form.submit 'Create product',class:"btn btn-primary btn-lg"%>
+  </div>
+<% end %>

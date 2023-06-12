@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   get '/login',to: 'sessions#new'
   post '/login',to:'sessions#create'
   get '/logout',to:'sessions#destroy'
+  resources :admin do
+    resources :categories,only: [:new,:create]
+    resources :sub_categories,only: [:new,:create]
+  end
 end

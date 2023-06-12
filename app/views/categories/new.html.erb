@@ -1,0 +1,9 @@
+<%= form_with model: @category,url: admin_categories_path(current_user.id) do |form| %>
+  <div class="mb-3">
+    <%= form.label :products,class:"form-label" %><br>
+    <%= form.text_field :products,class:"form-control" %>
+  </div>
+  <div>
+    <%= form.submit 'Create product',class:"btn btn-primary btn-lg"%>
+  </div>
+<% end %>
