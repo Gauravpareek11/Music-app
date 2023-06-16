@@ -1,0 +1,16 @@
+<% @items.each do |item|%>
+<ul>
+<li><%= item.title%></li>
+<li><%= item.description%></li>
+</ul>
+<% item.images.each do |image| %>
+  <%= image_tag image %>
+<% end %>
+  <%# <% <div class="mb-3" %> 
+    <%# <%= form.label :rating,class:"form-label" <br> %>
+    <%# <%= form.select :rating,["1","2","3","4","5"],class:"form-control" %>
+  <%# </div> %>
+<%# <%= link_to 'approve',edit_admin_path(item.id) %>
+<%= link_to 'Approve',admin_path(item.id),method: :put %>
+<%= link_to 'Reject',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to reject"} %>
+<% end %>

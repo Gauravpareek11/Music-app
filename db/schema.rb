@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_11_115739) do
+ActiveRecord::Schema.define(version: 2023_06_16_110044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,11 +49,32 @@ ActiveRecord::Schema.define(version: 2023_06_11_115739) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "sub_categories", force: :cascade do |t|
-    t.string "items"
-    t.integer "category_id"
+  create_table "products", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "user_name"
+    t.string "phone_number"
+    t.string "price"
+    t.string "role"
+    t.string "location"
+    t.json "images"
+    t.integer "approved_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.bigint "category_id"
+    t.bigint "sub_category_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
+    t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.string "items"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -67,4 +88,8 @@ ActiveRecord::Schema.define(version: 2023_06_11_115739) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "products", "categories"
+  add_foreign_key "products", "sub_categories"
+  add_foreign_key "products", "users"
+  add_foreign_key "sub_categories", "categories"
 end

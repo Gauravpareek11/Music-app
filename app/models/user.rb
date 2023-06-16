@@ -1,5 +1,6 @@
 require 'securerandom'
 class User < ApplicationRecord
+    has_many :products,dependent: :destroy
     has_secure_password
     def self.from_omniauth(auth)
         user = find_by(email: auth.info.email)

@@ -1,2 +1,16 @@
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
 <h1>Welcomes#index</h1>
 <p>Find me in app/views/welcomes/index.html.erb</p>
+<%= link_to 'create_products',new_product_path %>
+<% @items.each do |item|%>
+<%= item.title%>
+<%= item.description%>
+<% item.images.each do |image| %>
+  <%= image_tag image %>
+<% end %>
+
+<% end %>

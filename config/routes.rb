@@ -10,8 +10,13 @@ Rails.application.routes.draw do
   get '/login',to: 'sessions#new'
   post '/login',to:'sessions#create'
   get '/logout',to:'sessions#destroy'
+  get '/categories/:id/subcategories',to:'products#sub_categories'
   resources :admin do
     resources :categories,only: [:new,:create]
     resources :sub_categories,only: [:new,:create]
+    collection do
+      get :pending_approvals
+    end
   end
+  resources :products,only: [:new,:create,:destroy]
 end
