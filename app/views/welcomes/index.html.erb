@@ -5,6 +5,7 @@
 <% end %>
 <h1>Welcomes#index</h1>
 <p>Find me in app/views/welcomes/index.html.erb</p>
+<%= link_to 'chats',conversations_path %>
 <%= link_to 'create_products',new_product_path %>
 <% @items.each do |item|%>
 <%= item.title%>
@@ -12,5 +13,9 @@
 <% item.images.each do |image| %>
   <%= image_tag image %>
 <% end %>
-
+<h2>Start a Conversation</h2>
+<%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
+  <%= form.hidden_field :recipient_id, value: item.user_id %>
+  <%= form.submit "Start Conversation" %>
+<% end %>
 <% end %>

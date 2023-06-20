@@ -17,4 +17,6 @@ class User < ApplicationRecord
         contacts = auth[:extra][:raw_info][:contacts]
         # Do something with the contacts data, such as storing it in your database
     end
+    has_many :sent_conversations, class_name: 'Conversation', foreign_key: 'sender_id'
+    has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
 end

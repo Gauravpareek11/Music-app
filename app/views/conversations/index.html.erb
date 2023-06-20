@@ -1,0 +1,5 @@
+<h1>Conversations</h1>
+
+<% @conversations.each do |conversation| %>
+  <%= link_to conversation.opposed_user(current_user).email, conversation %>
+<% end %>
