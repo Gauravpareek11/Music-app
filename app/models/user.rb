@@ -19,4 +19,6 @@ class User < ApplicationRecord
     end
     has_many :sent_conversations, class_name: 'Conversation', foreign_key: 'sender_id'
     has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
+    has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender_id'
+    has_many :received_notifications, class_name: 'Notification', foreign_key: 'recipient_id'
 end
