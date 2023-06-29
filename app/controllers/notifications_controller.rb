@@ -1,4 +1,6 @@
 class NotificationsController < ApplicationController
+  before_action :show_data
+  before_action :authorize
   def index
     @notification=Notification.where(recipient_id: current_user.id)||[]
   end
@@ -22,11 +24,14 @@ class NotificationsController < ApplicationController
       redirect_to '/'
     end
   end
+  def read
+    current_user.received_notifications.update_all(read: true)
+  end
   private
   def notification_params
     # binding.pry
     params[:notification][:body]=JSON.parse(params[:notification][:body])
     # binding.pry
-    params.require(:notification).permit(:recipient_id,body: [:name,:age])
+    params.require(:notification).permit(:recipient_id,body: [:name,:email])
   end
 end

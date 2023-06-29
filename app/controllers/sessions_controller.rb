@@ -5,14 +5,14 @@ class SessionsController < ApplicationController
     def create
         user = User.find_by_email(params[:email])
         # If the user exists AND the password entered is correct.
-        if user && user.authenticate(params[:password_digest])
+        if user && user.authenticate(params[:password].downcase)
         # Save the user id inside the browser cookie. This is how we keep the user 
         # logged in when they navigate around our website.
         session[:user_id] = user.id
-        redirect_to '/'
+        redirect_to '/',notice:"Succesfully logged in"
         else
         # If user's login doesn't work, send them back to the login form.
-        redirect_to '/login'
+        redirect_to '/login',flash: {error:"Invalid email id or password"}
         end
     end
     def omni_create

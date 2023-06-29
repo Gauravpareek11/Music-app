@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_20_103802) do
+ActiveRecord::Schema.define(version: 2023_06_29_072052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2023_06_20_103802) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "products"
+    t.string "items", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2023_06_20_103802) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "read", default: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -71,16 +72,17 @@ ActiveRecord::Schema.define(version: 2023_06_20_103802) do
     t.json "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "read", default: false
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
-    t.string "user_name"
-    t.string "phone_number"
-    t.string "price"
+    t.string "title", null: false
+    t.string "description", null: false
+    t.string "user_name", null: false
+    t.string "phone_number", null: false
+    t.string "price", null: false
     t.string "role"
-    t.string "location"
+    t.string "location", null: false
     t.json "images"
     t.integer "approved_by"
     t.datetime "created_at", precision: 6, null: false
@@ -99,19 +101,25 @@ ActiveRecord::Schema.define(version: 2023_06_20_103802) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
+    t.index ["items", "category_id"], name: "index_sub_categories_on_items_and_category_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "password_digest"
-    t.string "password_confirmation"
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.boolean "admin", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "conversations", "users", column: "recipient_id"
+  add_foreign_key "conversations", "users", column: "sender_id"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "notifications", "users", column: "recipient_id"
+  add_foreign_key "notifications", "users", column: "sender_id"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "products", "users"

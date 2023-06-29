@@ -1,0 +1,12 @@
+<% unless @products.nil? %>
+  <% if @products.empty? %>
+    <h1>No posts found matching your query.</h1>
+  <% else %>
+    <h1>Search results</h1>
+    <div class="d-flex flex-wrap">
+      <% @products.each do |prod| %>
+        <%= render partial: 'welcomes/item_card', locals: { item: Product.find(prod.id) } %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

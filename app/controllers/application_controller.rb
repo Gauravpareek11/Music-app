@@ -17,4 +17,11 @@ class ApplicationController < ActionController::Base
     def restrict_user
         redirect_to '/',flash: {error: "Not Admin"} unless is_admin?
     end
+    def show_data
+        if(current_user)
+          @notification=Notification.where(recipient_id: current_user.id)||[]
+        else
+          @notification=[]
+        end
+    end
 end

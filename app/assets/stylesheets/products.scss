@@ -1,3 +1,17 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.sell-button{
+  background-color: #c79d6d !important;
+  border-color: #c79d6d !important;
+  color: black!important;
+}
+.sell-button:hover{
+  background-color: black!important;
+  border-color: black!important;
+  color: #c79d6d !important;
+}
+a{
+  text-decoration: none!important;
+  color: black!important;
+}

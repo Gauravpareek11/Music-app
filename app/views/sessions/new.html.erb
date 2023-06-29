@@ -1,12 +1,21 @@
-<h1>Login</h1>
+<div class="mx-auto w-25" >
+  <h1 class="mt-4">Login</h1>
 
-<%= form_tag '/login' do %>
+  <%= form_tag '/login' do |f|%>
 
-  Email: <%= text_field_tag :email %>
-  
-  Password: <%= password_field_tag :password_digest %>
-  Confirm Password: <%= password_field_tag :password_confirmation %>
-  <%= submit_tag "Submit" %>
+  <div class="mb-3">
+      <%= label_tag :email,"Email",class:"form-label" %>
+      <%= text_field_tag :email,nil,class:"form-control",placeholder:"Enter Your email" %>
+    </div>
+    <div class="mb-3">
+      <%= label_tag :password,"Password",class:"form-label" %>
+      <%= password_field_tag :password,nil,class:"form-control",placeholder:"Enter Your password" %>
+    </div>
+    <%= submit_tag "Submit",class:"d-block card-button mb-2 w-100" %>
 
-<% end %>
-<%= link_to 'Sign in with Google', '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token%>
+  <% end %>
+  <%= link_to '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token,class:"d-block card-button mb-2 w-100 text-center" do%>
+    <i class="fa-brands fa-google"></i> Sign in with Google
+  <% end %>
+  <%= link_to 'New User! Signup','/signup',class:"d-block card-button w-100 text-center"%>
+</div>

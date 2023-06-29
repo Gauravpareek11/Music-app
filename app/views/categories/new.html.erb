@@ -1,9 +1,12 @@
+<div class="mx-auto w-50 mt-4">
 <%= form_with model: @category,url: admin_categories_path(current_user.id) do |form| %>
   <div class="mb-3">
-    <%= form.label :products,class:"form-label" %><br>
-    <%= form.text_field :products,class:"form-control" %>
+    <%= form.label :items,class:"form-label" %><br>
+    <%= form.text_field :items,class:"form-control",placeholder:"Enter a Category Name" %>
+    <p class='error'><%= show_errors(@category, :items) %></p>
   </div>
   <div>
-    <%= form.submit 'Create product',class:"btn btn-primary btn-lg"%>
+    <%= form.submit 'Create Category',class:"card-button"%>
   </div>
 <% end %>
+</div>

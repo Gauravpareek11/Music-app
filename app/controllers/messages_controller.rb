@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  before_action :show_data
   def create
     @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.build(message_params)

@@ -27,7 +27,11 @@ gem 'dotenv-rails'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
-
+gem 'elasticsearch', '~> 7.17.7'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+# gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'main'
+# gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'main'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

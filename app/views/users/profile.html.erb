@@ -1,0 +1,48 @@
+<div class="card-body mx-auto w-50 mt-4">
+  <h1 class="mb-4">User Dash Board</h1>
+  <div class="row">
+    <div class="col-sm-3">
+      <h6 class="mb-0">Name</h6>
+    </div>
+    <div class="col-sm-9 text-secondary"> <%=@user.email%> </div>
+  </div><hr>
+  <div class="row">
+    <div class="col-sm-3">
+      <h6 class="mb-0">Email</h6>
+    </div>
+    <div class="col-sm-9 text-secondary"> <%=@user.email%></div>
+  </div><hr>
+  <div class="row">
+    <div class="col-sm-3">
+      <h6 class="mb-0">Phone</h6>
+    </div>
+    <div class="col-sm-9 text-secondary"> <%=@user.email%></div>
+  </div><hr>
+  <div class="row">
+    <div class="col-sm-3">
+      <h6 class="mb-0">Role</h6>
+    </div>
+    <%if @user.admin? %>
+      <div class="col-sm-9 text-secondary"> Admin</div>
+    <% else %>
+      <div class="col-sm-9 text-secondary">Normal User</div>
+    <% end %>
+  </div><hr>
+  <div class="row">
+    <div class="col-sm-3">
+      <h6 class="mb-0">No of items posted</h6>
+    </div>
+    <div class="col-sm-9 text-secondary"> <%=@user.products.where(role: "Seller").count%></div>
+  </div><hr>
+  <div class="row">
+    <div class="col-sm-3">
+      <h6 class="mb-0">No of Requirements posted</h6>
+    </div>
+    <div class="col-sm-9 text-secondary"> <%=@user.products.where(role: "Buyer").count%></div>
+  </div><hr>
+  <% if @user.admin?%>
+  <%= link_to 'Create categories',new_admin_category_path(@user.id),class:"card-button"%>
+  <%= link_to 'Create sub_categories',new_admin_sub_category_path(@user.id),class:"card-button"%>
+  <%= link_to 'pending_approvals',pending_approvals_admin_index_path(),class:"card-button"%>
+<%end%>
+</div>

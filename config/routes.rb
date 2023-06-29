@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get '/signup', to: "users#new"
   post '/users', to: "users#create"
-
+  get '/profile/:id',to:"users#profile",as:"profile"
   get '/auth/google_oauth2/callback', to: 'sessions#omni_create'
   get '/login',to: 'sessions#new'
   post '/login',to:'sessions#create'
@@ -18,10 +18,19 @@ Rails.application.routes.draw do
       get :pending_approvals
     end
   end
-  resources :products,only: [:new,:create,:destroy]
+  resources :products,only: [:show,:new,:create,:destroy] do
+    collection do
+      get :buy
+      get :search
+    end
+  end
   resources :conversations, only: [:index,:show,:create] do
     resources :messages, only: [:create]
   end
-  resources :notifications, only: [:index,:create]
+  resources :notifications, only: [:index,:create] do
+    collection do
+      get :read
+    end
+  end
   mount ActionCable.server => '/cable'
 end

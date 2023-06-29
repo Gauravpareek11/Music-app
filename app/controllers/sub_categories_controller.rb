@@ -1,6 +1,7 @@
 class SubCategoriesController < ApplicationController
   before_action :authorize
   before_action :restrict_user
+  before_action :show_data
   def new
       @sub_categories=SubCategory.new
   end

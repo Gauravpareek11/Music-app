@@ -1,9 +1,31 @@
-<h1>Signup!</h1>
+<div class="mx-auto w-25">
+  <h1 class="mt-2">Signup!</h1>
 
-<%= form_for :user, url: '/users' do |f| %>
-  Email: <%= f.text_field :email %>
-  Password: <%= f.password_field :password%>
-  Password Confirmation: <%= f.password_field :password_confirmation %>
-  <%= f.submit "Submit" %>
-
-<% end %>
+  <%= form_for :user, url: '/users' do |f| %>
+    <div class="mb-3">
+      <%= f.label :name,class:"form-label" %>
+      <%= f.text_field :name,class:"form-control",placeholder:"Enter Your name" %>
+      <p class='error'><%= show_errors(@user, :name) %></p>
+    </div>
+    <div class="mb-3">
+      <%= f.label :email,class:"form-label" %>
+      <%= f.text_field :email,class:"form-control",placeholder:"Enter Your email" %>
+      <p class='error'><%= show_errors(@user, :email) %></p>
+    </div>
+    <div class="mb-3">
+      <%= f.label :Password,class:"form-label" %>
+      <%= f.password_field :password,class:"form-control",placeholder:"Enter Your password" %>
+      <p class='error'><%= show_errors(@user, :password) %></p>
+    </div>
+    <div class="mb-3">
+      <%= f.label :password_confirmation,class:"form-label" %>
+      <%= f.password_field :password_confirmation,class:"form-control",placeholder:"Enter same password as above" %>
+      <p class='error'><%= show_errors(@user, :password_confirmation) %></p>
+    </div>
+    <%= f.submit "Submit" ,class:"card-button w-100 d-block text-center mb-2"%>
+  <% end %>
+  <%= link_to '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token,class:"d-block card-button mb-2 w-100 text-center" do%>
+    <i class="fa-brands fa-google"></i> Sign in with Google
+  <% end %>
+  <%= link_to 'Existing User! Login','/login',class:"d-block card-button w-100 text-center"%>
+</div>

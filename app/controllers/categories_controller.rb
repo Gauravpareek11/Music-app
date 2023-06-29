@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :authorize
   before_action :restrict_user
+  before_action :show_data
   def new
       @category=Category.new
   end
@@ -15,6 +16,6 @@ class CategoriesController < ApplicationController
   private
   def category_params
       # binding.pry
-      params.require(:category).permit(:products)
+      params.require(:category).permit(:items)
   end
 end

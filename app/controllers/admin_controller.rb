@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  before_action :show_data
   def index
   end
   def pending_approvals
