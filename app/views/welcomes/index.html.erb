@@ -20,18 +20,6 @@
   </a>
 </div>
 <h2 class="display-2 text-center mb-4">List of posted Instrumental Items</h2>
-<% if flash[:notice] %>
-  <div class="flash-notice">
-    <%= flash[:notice] %>
-  </div>
-<% end %>
-
-<% if flash[:error] %>
-  <div class="flash-error">
-    <%= flash[:error] %>
-  </div>
-<% end %>
-
 <div class="d-flex flex-wrap">
   <% @items.each do |item|%>
   <%= render partial: "item_card", locals: { item: item } %>

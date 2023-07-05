@@ -4,6 +4,6 @@
 class NotificationMailer < ApplicationMailer
   def notify(object)
     @obj = object
-    mail(to: 'mahfuzflamedestiny@gmail.com', subject: 'Welcome to My Awesome Site')
+    mail(to: User.find(object.recipient_id).email, subject: 'Hi I am Interested in your post')
   end
 end

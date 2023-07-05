@@ -13,7 +13,7 @@ class NotificationsController < ApplicationController
     @notification.sender = current_user
     return unless @notification.save
 
-    NotificationMailer.notify(@notification).deliver_now
+    NotificationMailer.notify(@notification).deliver_later
     broadcast_message(@notification)
   end
 
