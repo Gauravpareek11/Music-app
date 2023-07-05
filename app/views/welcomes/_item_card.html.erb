@@ -9,7 +9,7 @@
     <p class="card-text"><%= Category.find(item.category_id).items+"(#{SubCategory.find(item.sub_category_id).items})"%></p>
     <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
     <p class="card-text">posted by: <%= item.user_name%></p>
-    <p class="card-text">price:   <%= item.price%></p>
+    <p class="card-text">price:   &#8377;<%= item.price%></p>
     <% if current_user %>
     <div class="d-flex justify-content-between">
       <div class="w-50">

@@ -23,7 +23,7 @@
 </div>
 <h1><%=@product.title%></h1>
 <h3><%=Category.find(@product.category_id).items+"(#{SubCategory.find(@product.sub_category_id).items})"%></h3>
-<h3>Price: <%=@product.price%></h3>
+<h3>Price: &#8377;<%=@product.price%></h3>
 <h3><%=@product.description%></h3>
 <h3>Location:<%=@product.location%></h3>
 <h3>Posted By: <%=@product.user_name%></h3>
