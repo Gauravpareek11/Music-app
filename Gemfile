@@ -30,6 +30,10 @@ gem 'omniauth-rails_csrf_protection'
 gem 'elasticsearch', '~> 7.17.7'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'rubocop'
+gem 'rspec-rails', '~> 4.0'
+gem 'factory_bot_rails'
+
 # gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'main'
 # gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'main'
 # Use Active Storage variant

@@ -1,4 +1,5 @@
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<div class="mt-2 d-flex justify-content-center align-items-center">
+<div id="carouselExampleControls" class= "w-50 carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <% @product.images.each_with_index do |pic,i| %>
       <% if (i==0)%>
@@ -6,39 +7,42 @@
       <% else %>
         <div class="carousel-item">
       <% end %>
-          <%= image_tag pic,class:"d-block w-100",style:"height:500px",alt:"Third slide"%>
+          <%= image_tag pic,style:"height:500px",alt:"Third slide"%>
         </div>
     <% end %>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+  <a class="carousel-control-prev custom-carousel" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+  <a class="carousel-control-next custom-carousel" href="#carouselExampleControls" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
+</div>
 </div>
 <h1><%=@product.title%></h1>
 <h3><%=Category.find(@product.category_id).items+"(#{SubCategory.find(@product.sub_category_id).items})"%></h3>
 <h3>Price: <%=@product.price%></h3>
 <h3><%=@product.description%></h3>
-<h3><%=@product.location%></h3>
+<h3>Location:<%=@product.location%></h3>
 <h3>Posted By: <%=@product.user_name%></h3>
-<h3>Posted on: <%=@product.created_at%></h3>
+<h3>Posted on: <%= @product.created_at.strftime("%B %d, %Y") %></h3>
 <h3>Post Owner number: <%= link_to @product.phone_number,'tel:@product.phone_number'%> </h3>
 <div class="d-flex justify-content-between">
 <%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
   <%= form.hidden_field :recipient_id, value: @product.user_id %>
-  <%# <%= form.submit content_tag(:i, "Chat", class: "fa fa-brands fa-whatsapp") %>
   <%= form.button(type: 'submit',class:"card-button",style:"width:40vw") do %>
     <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
       Chat
   <% end %>
 <% end %>
-<%= form_with(model: Notification.new, url: notifications_path,method: :post,id:'noti-form') do |form| %>
+<%= form_with(model: Notification.new, url: notifications_path,method: :post,class:'noti-form') do |form| %>
   <%= form.hidden_field :recipient_id, value: @product.user_id %>
   <%= form.hidden_field :body, value: {name:current_user.name,email:current_user.email}.to_json %>
   <%= form.submit "Interested" ,class:"card-button",style:"width:40vw",id: 'notification_submit'%>
 <% end %>
 </div>
+<% if current_user %>
+  <div id="sender" data-sender-id="<%=current_user.id%>">
+<% end %>

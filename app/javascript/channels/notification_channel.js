@@ -2,38 +2,49 @@ import consumer from '../channels/consumer'
 console.log('hi')
 document.addEventListener('turbolinks:load', () => {
   console.log('hi')
-  const recieverId = document.getElementById('reciever').dataset.recieverId;
   const senderId = document.getElementById('sender').dataset.senderId;
-  const messageForm=document.getElementById('noti-form');
+  console.log(senderId)
+  const messageForm=document.getElementsByClassName('noti-form');
   const messagesContainer=document.getElementById('notifications');
   console.log(messagesContainer)
-
-  if (messageForm) {
-    console.log('form')
-    messageForm.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent the default form submission
-      
-      const formData = new FormData(messageForm);
-      
-      fetch(messageForm.action, {
-        method: messageForm.method,
-        body: formData
-      })
-      .then(response => {
-        if (response.ok) {
-          // Handle successful form submission
-          // You can update the chat interface or perform any other necessary actions
-          const submitButton = document.querySelector("#notification_submit")
-          submitButton.disabled = false
-        } else {
-          // Handle form submission error
-        }
-      })
-      .catch(error => {
-        // Handle any network or JavaScript error
+  console.log(messageForm)
+  Array.from(messageForm).forEach(function(form) {
+      console.log('form')
+      form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the default form submission
+        
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+          method: form.method,
+          body: formData
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('hi')
+            var flashDiv = document.createElement('div');
+            flashDiv.classList.add('flash-notice');
+            flashDiv.textContent = 'Thanks for showing your interest';
+            document.body.appendChild(flashDiv);
+            console.log(flashDiv)
+            setTimeout(function() {
+              flashDiv.parentNode.removeChild(flashDiv);
+            }, 5000);
+          } else {
+            var flashDiv = document.createElement('div');
+            flashDiv.classList.add('flash-notice');
+            flashDiv.textContent = 'Try again later';
+            document.body.appendChild(flashDiv);
+            console.log(flashDiv)
+            setTimeout(function() {
+              flashDiv.parentNode.removeChild(flashDiv);
+            }, 5000);
+          }
+        })
+        .catch(error => {
+        });
       });
     });
-  }
 
   consumer.subscriptions.create(
       { channel: 'NotificationChannel', sender_id: senderId },
@@ -42,13 +53,8 @@ document.addEventListener('turbolinks:load', () => {
           console.log("Connected to server")
         },
         received: function (data) {
-          messagesContainer.insertAdjacentHTML('beforeend', `<p><strong>${data.sender_id}</strong>: ${data['message']}</p>`);
-          // const messageInput = document.querySelector("#chat_message")
-          // messageInput.value = ""
+          messagesContainer.insertAdjacentHTML('beforeend', `<p>Hi I am Interested in your post</p>Name->${data['message'].name} Email->${data['message'].email}</p>`);
           console.log(data)
-          // recieverId=data['recipient_id']
-          // console.log()
-          // consumer.subscriptions.subscriptions[0].speak(data['message']);
         },
         speak: function (message) {
           // console.log(message)

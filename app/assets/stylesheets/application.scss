@@ -104,3 +104,22 @@ footer{
   font-size: 14px;
   margin-top: 5px;
 }
+.custom-carousel .carousel-control-prev-icon{
+  filter: invert(100%);
+}
+.custom-carousel .carousel-control-next-icon{
+  filter: invert(100%);
+}
+.flash-notice {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}

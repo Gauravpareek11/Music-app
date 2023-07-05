@@ -30,7 +30,7 @@
           <a class="nav-link" href="<%= buy_products_path%>">Buy</a>
         </li>
         <li class="nav-item mx-4">
-          <a class="nav-link" href="<%=new_product_path%>">Sell</a>
+          <a class="nav-link" href="<%=new_product_path%>">Post AD</a>
         </li>
         <li class="nav-item mx-4">
           <a class="nav-link" id="notification-count" href="#" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-duotone fa-bell"></i><span id="count-noti-badge"><%=notification_count() %></span></a>
@@ -51,7 +51,7 @@
       </div>
       <div class="contact-info d-md-flex">
         <% if current_user %>
-          Signed in as <mark><%= current_user.email %></mark> | <%= link_to "Logout", '/logout' %>
+          Signed in as <mark><%= current_user.name %></mark> | <%= link_to "Logout", '/logout' %>
         <% else %>
           <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
         <% end %>
@@ -73,8 +73,8 @@
       <div id='notifications'>
         <% @notification.each do |note| %>
         <p>Hi I am Interested in your post </p>
-        <%= "Name->#{note.body[:name]}" %>
-        <%= "Email->#{note.sender_id}" %>
+        <%= "Name->#{note.body['name']}" %>
+        <%= "Email->#{note.body['email']}" %>
         <hr>
         <% end %>
       </div>

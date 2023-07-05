@@ -1,21 +1,26 @@
+# frozen_string_literal: true
+
+# This is SubCategoriesController Controller
 class SubCategoriesController < ApplicationController
   before_action :authorize
   before_action :restrict_user
   before_action :show_data
   def new
-      @sub_categories=SubCategory.new
+    @sub_categories = SubCategory.new
   end
+
   def create
-    @sub_categories=SubCategory.new(sub_category_params)
+    @sub_categories = SubCategory.new(sub_category_params)
     if @sub_categories.save
-        redirect_to '/',flash: {success:"Item Created"}
+      redirect_to '/', flash: { success: 'Item Created' }
     else
-        render 'new'
+      render 'new'
     end
   end
+
   private
+
   def sub_category_params
-      # binding.pry
-      params.require(:sub_category).permit(:items,:category_id)
+    params.require(:sub_category).permit(:items, :category_id)
   end
 end

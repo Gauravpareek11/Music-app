@@ -20,14 +20,10 @@ document.addEventListener('turbolinks:load', () => {
       })
       .then(response => {
         if (response.ok) {
-          // Handle successful form submission
-          // You can update the chat interface or perform any other necessary actions
         } else {
-          // Handle form submission error
         }
       })
       .catch(error => {
-        // Handle any network or JavaScript error
       });
     });
   }

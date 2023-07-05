@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is Application Helper
 module ApplicationHelper
   def show_errors(object, field_name)
     return unless object.errors.any?
@@ -5,16 +8,21 @@ module ApplicationHelper
 
     object.errors.messages[field_name].join(', ')
   end
+
   def chat_count
-    count=0
-    conversations = current_user.sent_conversations.or(current_user.received_conversations)
-    conversations.each do |conv|
-      count+=conv.messages.where(read: false ).where.not(sender_id: current_user.id).count
+    count = 0
+    if current_user
+      conversations = current_user.sent_conversations.or(current_user.received_conversations)
+      conversations.each do |conv|
+        count += conv.messages.where(read: false).where.not(sender_id: current_user.id).count
+      end
     end
-    return count
+    count
   end
+
   def notification_count
-    count=notifications=current_user.received_notifications.where(read: false).count
-    return count
+    count = 0
+    count = current_user.received_notifications.where(read: false).count if current_user
+    count
   end
 end

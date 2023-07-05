@@ -4,7 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to example.com, <%= @obj.body %></h1>
-    <p>Thanks for joining and have a great day!</p>
+    <h2>Hi,I am Interested in your Post </h2>
+    <h3>Name: <%= @obj.body['name'] %><br>
+    <h3>Email: <%=@obj.body['email'] %>
   </body>
 </html>
