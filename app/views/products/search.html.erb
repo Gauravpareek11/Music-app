@@ -5,7 +5,7 @@
     <h1>Search results</h1>
     <div class="d-flex flex-wrap">
       <% @products.each do |prod| %>
-        <%= render partial: 'welcomes/item_card', locals: { item: Product.find(prod.id) } %>
+        <%= render partial: 'welcomes/item_card', locals: { item: prod } %>
       <% end %>
     </div>
   <% end %>

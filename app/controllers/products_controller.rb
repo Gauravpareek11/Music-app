@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
 
     return unless query
 
-    @products = Product.search_published(query)
+    @products = Product.search_published(query.strip).records
   end
 
   private
