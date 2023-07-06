@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    return unless current_user&.admin
+    current_user&.admin
   end
 
   def restrict_user

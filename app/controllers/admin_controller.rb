@@ -3,10 +3,12 @@
 # This Admin Controller
 class AdminController < ApplicationController
   before_action :show_data
+  before_action :restrict_user
   def index; end
 
   def pending_approvals
-    @items = Product.where(approved_by: nil)
+    @sell = Product.where(approved_by: nil, role: 'Seller')
+    @buy = Product.where(approved_by: nil, role: 'Buyer')
   end
 
   def edit

@@ -1,0 +1,21 @@
+<div class="d-flex flex-wrap">
+  <% items.each do |item|%>
+  <div class="card mx-2" style="width: 18rem;">
+    <%=image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px"%>
+    <div class="card-body">
+      <h5 class="card-title"><%= item.title%></h5>
+      <p class="card-text"><%= Category.find(item.category_id).items+"(#{SubCategory.find(item.sub_category_id).items})"%></p>
+      <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
+      <p class="card-text">posted by: <%= item.user_name%></p>
+      <p class="card-text">price:   <%= item.price%></p>
+      <div class="d-flex justify-content-between">
+        <div class="w-50">
+          <%= link_to 'Approve',admin_path(item.id),method: :put,class:"card-button" %>
+        </div>
+        <div class="w-50">
+          <%= link_to 'Reject',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to reject"},class:"card-button" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
