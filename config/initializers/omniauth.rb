@@ -1,5 +1,7 @@
+client_id=Rails.application.credentials.google[:client_id]
+client_secret=Rails.application.credentials.google[:client_secret]
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :google_oauth2, '300762541567-d697jis6225asi6iabko2o9qnksvv13m.apps.googleusercontent.com', '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', {
+  provider :google_oauth2, client_id, client_secret, {
     scope: 'email profile https://www.googleapis.com/auth/contacts.readonly',
     prompt: 'select_account',
     image_aspect_ratio: 'square',

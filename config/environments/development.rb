@@ -76,12 +76,13 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   # config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
+  mail_password= Rails.application.credentials.mail_password
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'example.com',
     user_name:            'pareekgaurav2211@gmail.com',
-    password:             'cviqpkmajeqepqnb',
+    password:             mail_password,
     authentication:       'plain',
     enable_starttls_auto: true,
     open_timeout:         5,
