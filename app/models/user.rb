@@ -4,9 +4,7 @@
 class User < ApplicationRecord
   require 'securerandom'
   before_create :downcase_email
-  # attr_accessor :password_confirmation
 
-  # validate :passwords_match
   validates :name, presence: { message: "Name Can't be empty" }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Invalid Email' },
                     uniqueness: { message: 'Already exist', case_sensitive: false },
@@ -14,7 +12,7 @@ class User < ApplicationRecord
   validates :password_digest, presence: { message: "Password Can't be empty" }
 
   has_many :products, dependent: :destroy
-
+  has_many :reviews
   has_many :sent_conversations, class_name: 'Conversation', foreign_key: 'sender_id'
   has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
   has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender_id'
@@ -30,7 +28,7 @@ class User < ApplicationRecord
     )
     user
   end
-  private
+
   def downcase_email
     self.email = email.downcase
   end

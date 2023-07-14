@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+# This is migration file
+
+# rubocop:disable Metrics/MethodLength
 class CreateProducts < ActiveRecord::Migration[6.1]
   def change
     create_table :products do |t|
@@ -12,9 +17,10 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.string :location
       t.json :images
       t.integer :approved_by, default: nil
-      t.string :rating , default: nil
+      t.string :rating, default: nil
       t.integer :user_id
       t.timestamps
     end
   end
 end
+# rubocop:enable Metrics/MethodLength

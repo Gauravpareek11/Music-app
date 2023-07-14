@@ -21,6 +21,8 @@ class UsersController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
+    @posted_items = @user.products.where(role: 'Seller')
+    @posted_require = @user.products.where(role: 'Buyer')
   end
 
   private

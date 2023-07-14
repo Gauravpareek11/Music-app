@@ -5,6 +5,7 @@ class ConversationsController < ApplicationController
   before_action :show_data
   before_action :restrict_messages, only: [:show]
   before_action :authorize
+  before_action :restrict_admin
   def index
     @conversations = current_user.sent_conversations.or(current_user.received_conversations)
   end

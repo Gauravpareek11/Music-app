@@ -3,6 +3,7 @@
 # This is Messages Controller
 class MessagesController < ApplicationController
   before_action :show_data
+  before_action :restrict_admin
   def create
     @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.build(message_params)

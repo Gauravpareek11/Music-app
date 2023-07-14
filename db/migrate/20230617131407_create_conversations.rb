@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is migration file
 class CreateConversations < ActiveRecord::Migration[6.1]
   def change
     create_table :conversations do |t|

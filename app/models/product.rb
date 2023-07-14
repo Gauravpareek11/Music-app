@@ -14,7 +14,15 @@ class Product < ApplicationRecord
   belongs_to :user
   belongs_to :category
   belongs_to :sub_category
+  has_many :reviews
   has_many_attached :images
+
+  scope :approved_sellers, ->(id) { where.not(approved_by: nil).where(role: 'Seller').where.not(user_id: id) }
+  scope :approved_buyers, ->(id) { where.not(approved_by: nil).where(role: 'Buyer').where.not(user_id: id) }
+  scope :unapproved_sellers, -> { where(approved_by: nil, role: 'Seller') }
+  scope :unapproved_buyers, -> { where(approved_by: nil, role: 'Buyer') }
+  scope :seller, -> { where(role: 'Seller') }
+  scope :buyer, -> { where(role: 'Buyer') }
 
   def self.index_data
     __elasticsearch__.create_index! force: true
@@ -32,6 +40,7 @@ class Product < ApplicationRecord
       indexes :approved_by, type: 'keyword'
     end
   end
+  # rubocop:disable Metrics/MethodLength,Style/HashSyntax
   def as_indexed_json(_options = {})
     {
       id: id,
@@ -72,3 +81,4 @@ class Product < ApplicationRecord
   end
   index_data
 end
+# rubocop:enable Metrics/MethodLength,Style/HashSyntax

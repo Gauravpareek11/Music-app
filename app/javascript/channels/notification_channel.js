@@ -54,6 +54,10 @@ document.addEventListener('turbolinks:load', () => {
         },
         received: function (data) {
           messagesContainer.insertAdjacentHTML('beforeend', `<p>Hi I am Interested in your post</p>Name->${data['message'].name} Email->${data['message'].email}</p>`);
+          var counterElement = document.getElementById('count-noti-badge')
+          var counter = parseInt(counterElement.textContent)
+          counter +=1
+          counterElement.textContent = counter;
           console.log(data)
         },
         speak: function (message) {

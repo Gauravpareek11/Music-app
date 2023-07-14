@@ -3,6 +3,7 @@
 # This is product_Spec
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe Product, type: :model do
   describe 'validations' do
     it 'is valid with valid attributes' do
@@ -53,3 +54,4 @@ RSpec.describe Product, type: :model do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

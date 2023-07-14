@@ -3,11 +3,11 @@
 # This is Application Controller
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
+  helper_method :current_user, :admin?
+  before_action :set_nil
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
-  helper_method :current_user, :is_admin?
 
   def authorize
     redirect_to '/login' unless current_user
@@ -31,5 +31,13 @@ class ApplicationController < ActionController::Base
 
   def logged_in
     redirect_to '/', flash: { error: 'Already Signed In' } if current_user
+  end
+
+  def restrict_admin
+    redirect_to '/', flash: { error: 'Admin Not allowed' } if admin?
+  end
+
+  def set_nil
+    session[:item] = nil
   end
 end

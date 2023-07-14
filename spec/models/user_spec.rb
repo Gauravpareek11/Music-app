@@ -2,7 +2,7 @@
 
 # This is User_Spec
 require 'rails_helper'
-
+# rubocop:disable Metrics/BlockLength
 RSpec.describe User, type: :model do
   describe 'validations' do
     it 'is valid with valid attributes' do
@@ -39,8 +39,9 @@ RSpec.describe User, type: :model do
   describe '#downcase_email' do
     it 'downcases the email' do
       user = FactoryBot.build(:user, email: 'jOHN@EXAMPLE.COM')
-      user.email=user.downcase_email
+      user.email = user.downcase_email
       expect(user.email).to eq('john@example.com')
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

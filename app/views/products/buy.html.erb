@@ -3,6 +3,7 @@
     <% @items.each do |item| %>
       <%= render partial: 'welcomes/item_card', locals: { item: item } %>
     <% end %>
+    <%= paginate @items%>
 </div>
 <% if current_user %>
   <div id="sender" data-sender-id="<%=current_user.id%>">

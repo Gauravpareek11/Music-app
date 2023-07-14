@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# rubocop:disable all
 
 # This is test file
 ENV['RAILS_ENV'] ||= 'test'

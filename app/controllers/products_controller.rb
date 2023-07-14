@@ -2,14 +2,18 @@
 
 # This is Products Controller
 class ProductsController < ApplicationController
-  before_action :authorize, except: :search
+  before_action :authorize, except: %i[search filter apply_filtering sub_categories]
   before_action :show_data
+  before_action :restrict_admin, only: %i[new create]
+  skip_before_action :set_nil, only: %i[search filter apply_filtering sub_categories]
+
   def new
     @product = Product.new
   end
 
   def show
     @product = Product.find(params[:id])
+    @reviews = @product.reviews
   end
 
   def create
@@ -34,7 +38,13 @@ class ProductsController < ApplicationController
   end
 
   def buy
-    @items = Product.where.not(approved_by: nil).where(role: 'Seller')
+    @items = current_user&.admin? ? Product.seller : Product.approved_sellers(current_user&.id)
+    @items = @items.page(params[:page]).per(10)
+  end
+
+  def sell
+    @items = current_user&.admin? ? Product.buyer : Product.approved_buyers(current_user&.id)
+    @items = @items.page(params[:page]).per(10)
   end
 
   def search
@@ -43,6 +53,21 @@ class ProductsController < ApplicationController
     return unless query
 
     @products = Product.search_published(query.strip).records
+    session[:item] = query
+  end
+
+  def filter
+    query = session[:item]
+    prod = Product.search_published(query.strip).records
+    @products = apply_filtering(prod, params)
+    render :search
+  end
+
+  def apply_filtering(prod, params)
+    prod = prod.where(category_id: params[:category]) if params[:category].present?
+    prod = prod.where(sub_category_id: params[:sub_category]) if params[:sub_category].present?
+    prod = prod.where(location: params[:location]) if params[:location].present?
+    prod
   end
 
   private

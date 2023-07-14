@@ -4,11 +4,11 @@
   <%= form_tag '/login' do |f|%>
 
   <div class="mb-3">
-      <%= label_tag :email,"Email",class:"form-label" %>
+      <%= label_tag :email,"Email",class:"form-label required" %>
       <%= text_field_tag :email,nil,class:"form-control",placeholder:"Enter Your email" %>
     </div>
     <div class="mb-3">
-      <%= label_tag :password,"Password",class:"form-label" %>
+      <%= label_tag :password,"Password",class:"form-label required" %>
       <%= password_field_tag :password,nil,class:"form-control",placeholder:"Enter Your password" %>
     </div>
     <%= submit_tag "Submit",class:"d-block card-button mb-2 w-100" %>
@@ -17,5 +17,6 @@
   <%= link_to '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token,class:"d-block card-button mb-2 w-100 text-center" do%>
     <i class="fa-brands fa-google"></i> Sign in with Google
   <% end %>
-  <%= link_to 'New User! Signup','/signup',class:"d-block card-button w-100 text-center"%>
+  <%= link_to 'New User! Signup','/signup',class:"d-block card-button mb-2 w-100 text-center"%>
+  <%= link_to 'Home Page','/',class:"d-block card-button w-100 text-center"%>
 </div>

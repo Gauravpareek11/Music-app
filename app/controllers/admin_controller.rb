@@ -7,8 +7,8 @@ class AdminController < ApplicationController
   def index; end
 
   def pending_approvals
-    @sell = Product.where(approved_by: nil, role: 'Seller')
-    @buy = Product.where(approved_by: nil, role: 'Buyer')
+    @sell = Product.unapproved_sellers
+    @buy = Product.unapproved_buyers
   end
 
   def edit

@@ -3,22 +3,22 @@
 
   <%= form_for :user, url: '/users' do |f| %>
     <div class="mb-3">
-      <%= f.label :name,class:"form-label" %>
+      <%= f.label :name,class:"form-label required" %>
       <%= f.text_field :name,class:"form-control",placeholder:"Enter Your name" %>
       <p class='error'><%= show_errors(@user, :name) %></p>
     </div>
     <div class="mb-3">
-      <%= f.label :email,class:"form-label" %>
+      <%= f.label :email,class:"form-label required" %>
       <%= f.text_field :email,class:"form-control",placeholder:"Enter Your email" %>
       <p class='error'><%= show_errors(@user, :email) %></p>
     </div>
     <div class="mb-3">
-      <%= f.label :Password,class:"form-label" %>
+      <%= f.label :Password,class:"form-label required" %>
       <%= f.password_field :password,class:"form-control",placeholder:"Enter Your password" %>
       <p class='error'><%= show_errors(@user, :password) %></p>
     </div>
     <div class="mb-3">
-      <%= f.label :password_confirmation,class:"form-label" %>
+      <%= f.label :password_confirmation,class:"form-label required" %>
       <%= f.password_field :password_confirmation,class:"form-control",placeholder:"Enter same password as above" %>
       <p class='error'><%= show_errors(@user, :password_confirmation) %></p>
     </div>
@@ -27,5 +27,6 @@
   <%= link_to '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token,class:"d-block card-button mb-2 w-100 text-center" do%>
     <i class="fa-brands fa-google"></i> Sign in with Google
   <% end %>
-  <%= link_to 'Existing User! Login','/login',class:"d-block card-button w-100 text-center"%>
+  <%= link_to 'Existing User! Login','/login',class:"d-block card-button mb-2 w-100 text-center"%>
+  <%= link_to 'Home Page','/',class:"d-block card-button w-100 text-center"%>
 </div>

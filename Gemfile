@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is gemfile
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -21,32 +24,39 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
 gem 'bootstrap', '~> 4.6', '>= 4.6.0'
 gem 'jquery-rails'
+
 gem 'dotenv-rails'
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection'
+
 gem 'elasticsearch', '~> 7.17.7'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
-gem 'rubocop'
-gem 'rspec-rails', '~> 4.0'
-gem 'factory_bot_rails'
 
-# gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'main'
-# gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'main'
+gem 'factory_bot_rails'
+gem 'rspec-rails', '~> 4.0'
+
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+
+gem 'rubocop'
+
+gem 'kaminari'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# rubocop: disable all
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry'
   gem 'letter_opener'
+  gem 'pry'
 end
 
 group :development do

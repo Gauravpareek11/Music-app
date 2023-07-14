@@ -35,8 +35,24 @@
     <div class="col-sm-9 text-secondary"> <%=@user.products.where(role: "Buyer").count%></div>
   </div><hr>
   <% if @user.admin?%>
-  <%= link_to 'Create categories',new_admin_category_path(@user.id),class:"card-button"%>
-  <%= link_to 'Create sub_categories',new_admin_sub_category_path(@user.id),class:"card-button"%>
+  <%= link_to 'Categories',admin_categories_path(@user.id),class:"card-button"%>
+  <%= link_to 'Sub_categories',admin_sub_categories_path(@user.id),class:"card-button"%>
   <%= link_to 'pending_approvals',pending_approvals_admin_index_path(),class:"card-button"%>
-<%end%>
+  <%end%>
 </div>
+<%unless @user.admin?%>
+<h2 class="text-center">List of posted Instrumental Items</h2>
+<div class="d-flex flex-wrap">
+    <% @posted_items.each do |item| %>
+      <%= render partial: 'welcomes/item_card', locals: { item: item } %>
+    <% end %>
+</div>
+<hr>
+  <h2 class="text-center">List of requirements for Instruments Posted</h2>
+<div class="d-flex flex-wrap">
+    <% @posted_require.each do |item| %>
+      <%= render partial: 'welcomes/item_card', locals: { item: item } %>
+    <% end %>
+</div>
+<hr>
+<% end %>

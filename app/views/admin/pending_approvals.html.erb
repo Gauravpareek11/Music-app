@@ -1,6 +1,14 @@
 <h2 class="display-4 text-center mb-4">List of Pending Approvals for Sell</h2>
-  <%= render partial: "approvals", locals: { items: @sell } %>
+ <div class="d-flex flex-wrap">
+    <%@sell.each do |item| %>
+      <%= render partial: "welcomes/item_card", locals: { item: item } %>
+    <% end %>
+  </div>
 </div>
 <h2 class="display-4 text-center mb-4">List of Pending Approvals for Buyer Requirements</h2>
-  <%= render partial: "approvals", locals: { items: @buy } %>
+  <div class="d-flex flex-wrap">
+    <%@buy.each do |item| %>
+      <%= render partial: "welcomes/item_card", locals: { item: item } %>
+    <% end %>
+  </div>
 </div>

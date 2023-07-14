@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is migration file
 class RemoveColumnsInTable < ActiveRecord::Migration[6.1]
   def change
     remove_column :products, :user_id

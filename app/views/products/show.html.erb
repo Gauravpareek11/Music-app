@@ -1,47 +1,95 @@
 <div class="mt-2 d-flex justify-content-center align-items-center">
-<div id="carouselExampleControls" class= "w-50 carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <% @product.images.each_with_index do |pic,i| %>
-      <% if (i==0)%>
-        <div class="carousel-item active">
-      <% else %>
-        <div class="carousel-item">
+  <div id="carouselExampleControls" class= "w-50 carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <% @product.images.each_with_index do |pic,i| %>
+        <% if (i==0)%>
+          <div class="carousel-item active">
+        <% else %>
+          <div class="carousel-item">
+        <% end %>
+            <%= image_tag pic,style:"height:500px",alt:"Third slide"%>
+          </div>
       <% end %>
-          <%= image_tag pic,style:"height:500px",alt:"Third slide"%>
-        </div>
-    <% end %>
+    </div>
+    <a class="carousel-control-prev custom-carousel" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next custom-carousel" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
-  <a class="carousel-control-prev custom-carousel" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next custom-carousel" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
 </div>
-</div>
-<h1><%=@product.title%></h1>
-<h3><%=Category.find(@product.category_id).items+"(#{SubCategory.find(@product.sub_category_id).items})"%></h3>
-<h3>Price: &#8377;<%=@product.price%></h3>
-<h3><%=@product.description%></h3>
-<h3>Location:<%=@product.location%></h3>
-<h3>Posted By: <%=@product.user_name%></h3>
-<h3>Posted on: <%= @product.created_at.strftime("%B %d, %Y") %></h3>
-<h3>Post Owner number: <%= link_to @product.phone_number,'tel:@product.phone_number'%> </h3>
-<div class="d-flex justify-content-between">
-<%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
-  <%= form.hidden_field :recipient_id, value: @product.user_id %>
-  <%= form.button(type: 'submit',class:"card-button",style:"width:40vw") do %>
-    <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
-      Chat
+<div class="mx-4">
+  <h1><%=@product.title%></h1>
+  <h3><%=Category.find(@product.category_id).items+"(#{SubCategory.find(@product.sub_category_id).items})"%></h3>
+  <h3>Price: <strong>&#8377;<%=@product.price%></strong></h3>
+  <h3><%=@product.description%></h3>
+  <h3>Location:<%=@product.location%></h3>
+  <h3>Posted By: <%=@product.user_name%></h3>
+  <h3>Posted on: <%= @product.created_at.strftime("%B %d, %Y") %></h3>
+  <h3>Post Owner number: <%= link_to @product.phone_number,'tel:@product.phone_number'%> </h3>
+  <% if current_user&.admin?%>
+    <% unless @product.approved_by %>
+      <div class="d-flex justify-content-between">
+        <div>
+          <%= link_to 'Approve',admin_path(@product.id),method: :put,class:"card-button d-block text-center",style:"width:40vw" %>
+        </div>
+        <div>
+          <%= link_to 'Reject',product_path(@product.id),method: :delete,data:{confirm: "Are you sure you want to reject"},class:"card-button d-block text-center",style:"width:40vw" %>
+        </div>
+      </div>
+    <% else %>
+      <p>The item has been approved by:<strong><%= User.find(@product.approved_by).name%></strong><p>
+    <% end %>
+  <% else %>
+  <div class="d-flex justify-content-between">
+  <%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
+    <%= form.hidden_field :recipient_id, value: @product.user_id %>
+    <%= form.button(type: 'submit',class:"card-button",style:"width:40vw") do %>
+      <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
+        Chat
+    <% end %>
   <% end %>
-<% end %>
-<%= form_with(model: Notification.new, url: notifications_path,method: :post,class:'noti-form') do |form| %>
-  <%= form.hidden_field :recipient_id, value: @product.user_id %>
-  <%= form.hidden_field :body, value: {name:current_user.name,email:current_user.email}.to_json %>
-  <%= form.submit "Interested" ,class:"card-button",style:"width:40vw",id: 'notification_submit'%>
-<% end %>
+  <%= form_with(model: Notification.new, url: notifications_path,method: :post,class:'noti-form') do |form| %>
+    <%= form.hidden_field :recipient_id, value: @product.user_id %>
+    <%= form.hidden_field :body, value: {name:current_user.name,email:current_user.email}.to_json %>
+    <%= form.submit "Interested" ,class:"card-button",style:"width:40vw",id: 'notification_submit'%>
+  <% end %>
+  </div>
+  <% end %>
+  <% if @product.approved_by%>
+    <h2>Reviews</h2>
+    <% if @reviews.size == 0%>
+      <strong>No reviews yet</strong>
+    <% else %>
+      <div id="reviews-section">
+        <% @reviews.each do |review| %>
+          <div class="review">
+            <div class="rating"><%= review.rating %> stars</div>
+            <div class="username">by <%= review.user.name %></div>
+            <div class="comment"><%= review.comment %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless current_user&.admin?%>
+      <h3 class="mt-4">Add a Review</h3>
+      <%= form_with(model: [@product, Review.new]) do |form| %>
+        <%= form.hidden_field :product_id %>
+        <div class="form-group w-50">
+          <%= form.label :rating, class: "form-label" %>
+          <%= form.select :rating, options_for_select(1..5), {}, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= form.label :comment, class: "form-label" %>
+          <%= form.text_area :comment, class: "form-control", rows: 3 %>
+        </div>
+        <%= form.submit 'Submit Review', class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  <% end%>
 </div>
 <% if current_user %>
   <div id="sender" data-sender-id="<%=current_user.id%>">
