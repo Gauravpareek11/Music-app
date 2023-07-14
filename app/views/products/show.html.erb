@@ -44,20 +44,22 @@
       <p>The item has been approved by:<strong><%= User.find(@product.approved_by).name%></strong><p>
     <% end %>
   <% else %>
-  <div class="d-flex justify-content-between">
-  <%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
-    <%= form.hidden_field :recipient_id, value: @product.user_id %>
-    <%= form.button(type: 'submit',class:"card-button",style:"width:40vw") do %>
-      <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
-        Chat
-    <% end %>
+  <% unless @product.user_id == current_user.id %>
+    <div class="d-flex justify-content-between">
+      <%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
+        <%= form.hidden_field :recipient_id, value: @product.user_id %>
+        <%= form.button(type: 'submit',class:"card-button",style:"width:40vw") do %>
+          <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
+            Chat
+        <% end %>
+      <% end %>
+      <%= form_with(model: Notification.new, url: notifications_path,method: :post,class:'noti-form') do |form| %>
+        <%= form.hidden_field :recipient_id, value: @product.user_id %>
+        <%= form.hidden_field :body, value: {name:current_user.name,email:current_user.email}.to_json %>
+        <%= form.submit "Interested" ,class:"card-button",style:"width:40vw",id: 'notification_submit'%>
+      <% end %>
+    </div>
   <% end %>
-  <%= form_with(model: Notification.new, url: notifications_path,method: :post,class:'noti-form') do |form| %>
-    <%= form.hidden_field :recipient_id, value: @product.user_id %>
-    <%= form.hidden_field :body, value: {name:current_user.name,email:current_user.email}.to_json %>
-    <%= form.submit "Interested" ,class:"card-button",style:"width:40vw",id: 'notification_submit'%>
-  <% end %>
-  </div>
   <% end %>
   <% if @product.approved_by%>
     <h2>Reviews</h2>
