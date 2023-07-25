@@ -47,6 +47,7 @@ class ProductsController < ApplicationController
     return unless query
 
     @products = Product.search_published(query.strip).records
+    @products = @products.page(params[:page]).per(10)
     session[:item] = query
   end
 
@@ -54,6 +55,7 @@ class ProductsController < ApplicationController
     query = session[:item]
     prod = Product.search_published(query.strip).records
     @products = apply_filtering(prod, params)
+    @products = @products.page(params[:page]).per(10)
     render :search
   end
 
