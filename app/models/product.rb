@@ -4,25 +4,50 @@
 class Product < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-  validates :title, presence: { message: "Title can't be null" }
-  validates :description, presence: { message: "Description can't be null" }
-  validates :phone_number, length: { minimum: 8, maximum: 10, message: 'Invalid phone number' },
-                           presence: { message: "Phone number can't be empty" }
-  validates :user_name, presence: { message: "Name can't be null" }
-  validates :price, presence: { message: "Price can't be null" }
-  validates :location, presence: { message: "Location can't be null" }
+
   belongs_to :user
+  belongs_to :approved_by_user, class_name: 'User', foreign_key: :approved_by, optional: true
+  belongs_to :rejected_by_user, class_name: 'User', foreign_key: :rejected_by, optional: true
   belongs_to :category
   belongs_to :sub_category
   has_many :reviews
   has_many_attached :images
 
-  scope :approved_sellers, ->(id) { where.not(approved_by: nil).where(role: 'Seller').where.not(user_id: id) }
-  scope :approved_buyers, ->(id) { where.not(approved_by: nil).where(role: 'Buyer').where.not(user_id: id) }
-  scope :unapproved_sellers, -> { where(approved_by: nil, role: 'Seller') }
-  scope :unapproved_buyers, -> { where(approved_by: nil, role: 'Buyer') }
-  scope :seller, -> { where(role: 'Seller') }
-  scope :buyer, -> { where(role: 'Buyer') }
+  validates :title, presence: { message: "Title can't be null" }
+  validates :description, presence: { message: "Description can't be null" }
+  validates :phone_number, length: { minimum: 8, maximum: 10, message: 'Invalid phone number' },
+                           presence: { message: "Phone number can't be empty" },
+                           numericality: { greater_than: 0, message: 'Enter valid phone number' }
+  validates :user_name, presence: { message: "Name can't be null" }
+  validates :price, presence: { message: "Price can't be null" },
+                    numericality: { greater_than: 0, message: 'Enter valid price' }
+  validate :positive_number_validation
+  validates :location, presence: { message: "Location can't be null" }
+  validates :images, content_type: {
+    in: ['image/png', 'image/jpg', 'image/jpeg'],
+    message: 'must be a PNG, JPG, or JPEG image'
+  }
+  validates :images, size: { less_than: 1.megabytes, message: 'file size must be less than 1MB' }
+
+  scope :approved_sellers, lambda { |id|
+                             where.not(approved_by: nil).where(rejected_by: nil, role: 'Seller').where.not(user_id: id)
+                           }
+  scope :approved_buyers, lambda { |id|
+                            where.not(approved_by: nil).where(rejected_by: nil, role: 'Buyer').where.not(user_id: id)
+                          }
+  scope :unapproved_sellers, -> { where(approved_by: nil, rejected_by: nil, role: 'Seller') }
+  scope :unapproved_buyers, -> { where(approved_by: nil, rejected_by: nil, role: 'Buyer') }
+  scope :rejected_sellers, -> { where(approved_by: nil, role: 'Seller').where.not(rejected_by: nil) }
+  scope :rejected_buyers, -> { where(approved_by: nil, role: 'Buyer').where.not(rejected_by: nil) }
+  scope :seller, -> { where(role: 'Seller', rejected_by: nil) }
+  scope :buyer, -> { where(role: 'Buyer', rejected_by: nil) }
+
+  def positive_number_validation
+    return if price.blank?
+    return if price.to_f.positive? && price[0].to_f.positive?
+
+    errors.add(:price, 'Price Only Except Number no special character.')
+  end
 
   def self.index_data
     __elasticsearch__.create_index! force: true

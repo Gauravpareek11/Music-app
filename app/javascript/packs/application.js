@@ -15,8 +15,23 @@ Turbolinks.start()
 ActiveStorage.start()
 document.addEventListener("DOMContentLoaded", function() {
   console.log(document.getElementById("notification-count"))
-document.getElementById("notification-count").addEventListener("click", function() {
+document.getElementById("mark-read").addEventListener("click", function() {
   fetch('notifications/read')
+  document.getElementById("notifications").innerHTML = "";
   document.getElementById("count-noti-badge").innerHTML = "0";
+  const noNoti=document.getElementById('no-notification');
+  if(noNoti !== null){
+    console.log(noNoti)
+    noNoti.remove()
+  }
+  const divElement = document.createElement('div');
+  divElement.setAttribute('id', 'no-notification');
+
+  const h1Element = document.createElement('h1');
+  const h1Text = document.createTextNode('No Notification to show');
+  h1Element.appendChild(h1Text);
+  divElement.appendChild(h1Element);
+  const bodyElement = document.getElementById("noti-container");
+  bodyElement.appendChild(divElement);
 });
 });

@@ -7,11 +7,11 @@
     </tr>
   </thead>
   <tbody>
-    <%@category.each do |category|%>
+    <% @category.each do |category| %>
       <tr>
-        <td><%=category.items%></td>
-        <td><%= link_to 'EDIT',edit_admin_category_path(current_user.id,category.id),class:"card-button"%></td>
-        <td><%= link_to 'Delete',admin_category_path(current_user.id,category.id),method: :delete,data:{confirm: "Are you sure you want to delete"},class:"card-button"%></td>
+        <td><%= category.items %></td>
+        <td><%= link_to 'EDIT',edit_admin_category_path(current_user.id,category.id),class:"card-button" %></td>
+        <td><%= link_to 'Delete',admin_category_path(current_user.id,category.id),method: :delete,data:{confirm: "Are you sure you want to delete"},class:"card-button" %></td>
       </tr>
     <% end %>
   </tbody>

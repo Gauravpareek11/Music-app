@@ -9,6 +9,7 @@ FactoryBot.define do
     user_name { 'Example User' }
     price { 10.99 }
     location { 'Example Location' }
+    role { 'Seller' }
     user
     category
     sub_category

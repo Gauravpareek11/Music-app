@@ -5,8 +5,9 @@ class NotificationsController < ApplicationController
   before_action :show_data
   before_action :authorize
   before_action :restrict_admin
+
   def index
-    @notification = Notification.where(recipient_id: current_user.id) || []
+    @notification = Notification.where(recipient_id: current_user.id, read: false) || []
   end
 
   def create

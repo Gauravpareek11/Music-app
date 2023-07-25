@@ -6,8 +6,10 @@ class ConversationsController < ApplicationController
   before_action :restrict_messages, only: [:show]
   before_action :authorize
   before_action :restrict_admin
+
   def index
     @conversations = current_user.sent_conversations.or(current_user.received_conversations)
+    @conversations = @conversations.page(params[:page]).per(10)
   end
 
   def create
@@ -31,5 +33,5 @@ def restrict_messages
   @id = Conversation.find(params[:id])
   return unless @id.sender_id != current_user.id && @id.recipient_id != current_user.id
 
-  redirect_to '/', notice: 'Cannot show messages'
+  redirect_to '/', flash: { error: 'Cannot show messages' }
 end

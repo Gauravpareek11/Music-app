@@ -13,23 +13,17 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
-    @reviews = @product.reviews
+    @reviews = @product.reviews.page(params[:page]).per(10)
   end
 
   def create
     @product = Product.new(product_params)
     @product[:user_id] = current_user.id
     if @product.save
-      redirect_to '/'
+      redirect_to '/', flash: { success: 'Item Posted It will be public after Admin\'s Approval' }
     else
       render 'new'
     end
-  end
-
-  def destroy
-    @product = Product.find(params[:id])
-    @product.destroy
-    redirect_to pending_approvals_admin_index_path
   end
 
   def sub_categories

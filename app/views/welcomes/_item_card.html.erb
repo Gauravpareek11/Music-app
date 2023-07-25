@@ -1,24 +1,25 @@
 <div class="card mx-2 my-2" style="width: 18rem;">
   <% if item.images.present? %>
-  <%=image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px"%>
+    <%=image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px"%>
   <% else %>
-  <img src="<%= image_path('Image_not_available.png') %>",style="height:300px">
+    <img src="<%= image_path('Image_not_available.png') %>",style="height:300px">
   <% end %>
   <div class="card-body">
     <h5 class="card-title"><%= item.title%></h5>
-    <p class="card-text"><%= Category.find(item.category_id).items+"(#{SubCategory.find(item.sub_category_id).items})"%></p>
+    <p class="card-text"><%= item.category.items+"(#{item.sub_category.items})" %></p>
     <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
     <p class="card-text">posted by: <strong><%= item.user_name%></strong></p>
     <p class="card-text">price:   <strong>&#8377;<%= item.price%></strong></p>
     <% if current_user %>
-      <% if current_user&.admin?%>
-        <% unless item.approved_by%>
+      <% if current_user&.admin? %>
+        <% if !item.approved_by %>
           <div class="d-flex justify-content-between">
             <%= link_to 'Approve',admin_path(item.id),method: :put,class:"card-button text-center",style: "width:40%" %>
-            <%= link_to 'Reject',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to reject"},class:"card-button text-center",style: "width:40%" %>
+            <%= link_to 'Reject',reject_post_admin_path(item.id),method: :put,data:{confirm: "Are you sure you want to reject"},class:"card-button text-center",style: "width:40%" %>
           </div>
         <% else %>
-          <p>The item has been approved by:<strong><%= User.find(item.approved_by).name%></strong><p>
+          <p>The item has been approved by:<strong><%= item.approved_by_user.name %></strong>
+          </p>
         <%end%>
       <% else %>
         <% unless item.user_id == current_user.id %>
@@ -27,10 +28,10 @@
               <%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
                 <%= form.hidden_field :recipient_id, value: item.user_id %>
                 <%= form.button(type: 'submit',class:"card-button") do %>
-                <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
+                  <%= content_tag(:i, nil, class: 'fa fa-brands fa-whatsapp') %>
                   Chat
                 <% end %>
-                <% end %>
+              <% end %>
             </div>
             <div class="w-50">
               <%= form_with(model: Notification.new, url: notifications_path,method: :post,class:'noti-form') do |form| %>
@@ -40,11 +41,11 @@
               <% end %>
             </div>
           </div>
-         <% end %>
+        <% end %>
       <% end%>
-    <div class="d-flex justify-content-center">
-    <a href="<%=product_path(item)%>" class="card-button view-more w-50 mt-2">view more</a>
-    </div>
+      <div class="d-flex justify-content-center">
+        <a href="<%=product_path(item)%>" class="card-button view-more w-50 mt-2">view more</a>
+      </div>
     <% end %>
   </div>
 </div>

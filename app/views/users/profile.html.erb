@@ -4,14 +4,16 @@
     <div class="col-sm-3">
       <h6 class="mb-0">Name</h6>
     </div>
-    <div class="col-sm-9 text-secondary"> <%=@user.name%> </div>
-  </div><hr>
+    <div class="col-sm-9 text-secondary"> <%= @user.name %> </div>
+  </div>
+  <hr>
   <div class="row">
     <div class="col-sm-3">
       <h6 class="mb-0">Email</h6>
     </div>
-    <div class="col-sm-9 text-secondary"> <%=@user.email%></div>
-  </div><hr>
+    <div class="col-sm-9 text-secondary"> <%= @user.email %></div>
+  </div>
+  <hr>
   <div class="row">
     <div class="col-sm-3">
       <h6 class="mb-0">Role</h6>
@@ -21,38 +23,59 @@
     <% else %>
       <div class="col-sm-9 text-secondary">Normal User</div>
     <% end %>
-  </div><hr>
-  <div class="row">
-    <div class="col-sm-3">
-      <h6 class="mb-0">No of items posted</h6>
+  </div>
+  <hr>
+  <% unless @user.admin? %>
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="mb-0">No of items posted</h6>
+      </div>
+      <div class="col-sm-9 text-secondary"> <%= @user.products.seller.count %></div>
     </div>
-    <div class="col-sm-9 text-secondary"> <%=@user.products.where(role: "Seller").count%></div>
-  </div><hr>
-  <div class="row">
-    <div class="col-sm-3">
-      <h6 class="mb-0">No of Requirements posted</h6>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="mb-0">No of Requirements posted</h6>
+      </div>
+      <div class="col-sm-9 text-secondary"> <%= @user.products.buyer.count %></div>
     </div>
-    <div class="col-sm-9 text-secondary"> <%=@user.products.where(role: "Buyer").count%></div>
-  </div><hr>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="mb-0">No of items Rejected</h6>
+      </div>
+      <div class="col-sm-9 text-secondary"> <%= @user.products.rejected_sellers.count %></div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="mb-0">No of Requiremenets Rejected</h6>
+      </div>
+      <div class="col-sm-9 text-secondary"> <%= @user.products.rejected_buyers.count %></div>
+    </div>
+    <hr>
+  <% end %>
   <% if @user.admin?%>
-  <%= link_to 'Categories',admin_categories_path(@user.id),class:"card-button"%>
-  <%= link_to 'Sub_categories',admin_sub_categories_path(@user.id),class:"card-button"%>
-  <%= link_to 'pending_approvals',pending_approvals_admin_index_path(),class:"card-button"%>
+    <%= link_to 'Categories',admin_categories_path(@user.id),class:"card-button"%>
+    <%= link_to 'Sub_categories',admin_sub_categories_path(@user.id),class:"card-button"%>
+    <%= link_to 'pending_approvals',pending_approvals_admin_index_path(),class:"card-button"%>
   <%end%>
 </div>
 <%unless @user.admin?%>
-<h2 class="text-center">List of posted Instrumental Items</h2>
-<div class="d-flex flex-wrap">
+  <h2 class="text-center">List of posted Instrumental Items</h2>
+  <div class="d-flex flex-wrap">
     <% @posted_items.each do |item| %>
       <%= render partial: 'welcomes/item_card', locals: { item: item } %>
     <% end %>
-</div>
-<hr>
+  </div>
+  <%= paginate @posted_items %>
+  <hr>
   <h2 class="text-center">List of requirements for Instruments Posted</h2>
-<div class="d-flex flex-wrap">
+  <div class="d-flex flex-wrap">
     <% @posted_require.each do |item| %>
       <%= render partial: 'welcomes/item_card', locals: { item: item } %>
     <% end %>
-</div>
-<hr>
+  </div>
+  <%= paginate @posted_require %>
+  <hr>
 <% end %>

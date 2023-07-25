@@ -4,6 +4,7 @@
 class SessionsController < ApplicationController
   before_action :authorize, only: [:destroy]
   before_action :logged_in, except: [:destroy]
+
   def new; end
 
   def create
@@ -24,6 +25,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to '/login'
+    redirect_to '/login', flash: { success: 'You are successfully logged out' }
   end
 end

@@ -3,6 +3,7 @@
 # This is Welcomes Controller
 class WelcomesController < ApplicationController
   before_action :show_data
+
   def index
     if current_user&.admin?
       @items = Product.seller.limit(8)

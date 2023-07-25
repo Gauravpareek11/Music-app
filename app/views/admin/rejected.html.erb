@@ -1,0 +1,19 @@
+<% if @rejected_sellers.empty? && @rejected_buyers.empty? %>
+  <h1>There is no Rejected post</h1>
+<% end %>
+<% unless @rejected_sellers.empty? %>
+  <h2 class="display-4 text-center mb-4">List of Rejected Posts for Sell</h2>
+  <div class="d-flex flex-wrap">
+    <% @rejected_sellers.each do |item| %>
+      <%= render partial: "reject", locals: { item: item } %>
+    <% end %>
+  </div>
+<% end %>
+<% unless @rejected_buyers.empty? %>
+  <h2 class="display-4 text-center mb-4">List of Rejected Post for Buyer Requirements</h2>
+  <div class="d-flex flex-wrap">
+    <%@rejected_buyers.each do |item| %>
+      <%= render partial: "reject", locals: { item: item } %>
+    <% end %>
+  </div>
+<% end %>

@@ -5,6 +5,8 @@ class SubCategoriesController < ApplicationController
   before_action :authorize
   before_action :restrict_user
   before_action :show_data
+  before_action :find_sub_category, only: %i[edit update destroy]
+
   def index
     @sub_categories = SubCategory.all
     @sub_categories = @sub_categories.page(params[:page]).per(10)
@@ -17,18 +19,15 @@ class SubCategoriesController < ApplicationController
   def create
     @sub_categories = SubCategory.new(sub_category_params)
     if @sub_categories.save
-      redirect_to '/', flash: { success: 'Item Created' }
+      redirect_to admin_sub_categories_path, flash: { success: 'SubCategory Created Sucessfully' }
     else
       render 'new'
     end
   end
 
-  def edit
-    @sub_categories = SubCategory.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @sub_categories = SubCategory.find(params[:id])
     if @sub_categories.update(sub_category_params)
       redirect_to admin_sub_categories_path, flash: { success: 'Item updated Successfully' }
     else
@@ -37,7 +36,6 @@ class SubCategoriesController < ApplicationController
   end
 
   def destroy
-    @sub_categories = SubCategory.find(params[:id])
     if @sub_categories.destroy
       redirect_to admin_sub_categories_path, flash: { success: 'Item destroyed Successfully' }
     else
@@ -49,5 +47,9 @@ class SubCategoriesController < ApplicationController
 
   def sub_category_params
     params.require(:sub_category).permit(:items, :category_id)
+  end
+
+  def find_sub_category
+    @sub_categories = SubCategory.find(params[:id])
   end
 end

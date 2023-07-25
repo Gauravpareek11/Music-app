@@ -1,17 +1,17 @@
 <div class="mx-auto w-50 mt-4">
-<%= form_with model: @sub_categories,url:admin_sub_categories_path(current_user.id) do |form| %>
-  <div class="mb-3">
-    <%= form.label :item,class:"form-label required" %><br>
-    <%= form.text_field :items,class:"form-control",placeholder:"Enter Sub-Category Name" %>
-    <p class='error'><%= show_errors(@sub_categories, :items) %></p>
-  </div>
-  <div>
-    <%= form.label :category,class:"form-label required" %>
-    <%= form.select :category_id, options_for_select(Category.all.map { |category| [category.items, category.id,]}),prompt: "-Please Select-"%>
-    <p class='error'><%= show_errors(@sub_categories, :category_id) %></p>
-</div>
-  <div>
-    <%= form.submit 'Create Sub Category',class:"card-button mt-2"%>
-  </div>
-<% end %>
+  <%= form_with model: @sub_categories,url:admin_sub_categories_path(current_user.id) do |form| %>
+    <div class="mb-3">
+      <%= form.label :item,class:"form-label required" %><br>
+      <%= form.text_field :items,class:"form-control",placeholder:"Enter Sub-Category Name" %>
+      <p class='error'><%= show_errors(@sub_categories, :items) %></p>
+    </div>
+    <div>
+      <%= form.label :category,class:"form-label required" %>
+      <%= form.select :category_id, options_for_select(Category.all.map { |category| [category.items, category.id,]}),prompt: "-Please Select-"%>
+      <p class='error'><%= show_errors(@sub_categories, :category_id) %></p>
+    </div>
+    <div>
+      <%= form.submit 'Create Sub Category',class:"card-button mt-2"%>
+    </div>
+  <% end %>
 </div>

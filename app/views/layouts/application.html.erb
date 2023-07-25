@@ -5,25 +5,24 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'dynamic_dropdown'%>
-
+  </head>
   <body>
-  <%= render partial: 'shared/nav' %>
-  <%= render partial: 'shared/flash' %>
+    <%= render partial: 'shared/nav' %>
+    <%= render partial: 'shared/flash' %>
     <%= yield %>
     <footer>
-    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 mt-4 border-top">
-      <p class="ml-4">© 2023 Company, Inc. All rights reserved.</p>
-      <ul class="list-unstyled d-flex mr-4">
-        <li class="ms-3"><a class="link-dark" href="https://instagram.com/gaurav__pareek?igshid=ZGUzMzM3NWJiOQ=="><i class="fa fa-brands fa-instagram fa-lg" width="24" height="24"></i></a></li>
-        <li class="ms-3"><a class="link-dark" href="https://www.linkedin.com/in/gaurav-pareek-631472193/"><i class="fa-brands fa-linkedin fa-lg"></i></a></li>
-        <li class="ms-3"><a class="link-dark" href="https://m.facebook.com/Gaurav22.pareek"><i class="fa-brands fa-facebook fa-lg"></i></a></li>
-        <li class="ms-3"><a class="link-dark" href="mailto:gppareek22@gmail.com"><i class="fa-solid fa-envelope fa-lg"></i></a></li>
-      </ul>
-    </div>
+      <div class="d-flex flex-column flex-sm-row justify-content-between py-4 mt-4 border-top">
+        <p class="ml-4">© 2023 Company, Inc. All rights reserved.</p>
+        <ul class="list-unstyled d-flex mr-4">
+          <li class="ms-3"><a class="link-dark" href="https://instagram.com/gaurav__pareek?igshid=ZGUzMzM3NWJiOQ=="><i class="fa fa-brands fa-instagram fa-lg" width="24" height="24"></i></a></li>
+          <li class="ms-3"><a class="link-dark" href="https://www.linkedin.com/in/gaurav-pareek-631472193/"><i class="fa-brands fa-linkedin fa-lg"></i></a></li>
+          <li class="ms-3"><a class="link-dark" href="https://m.facebook.com/Gaurav22.pareek"><i class="fa-brands fa-facebook fa-lg"></i></a></li>
+          <li class="ms-3"><a class="link-dark" href="mailto:gppareek22@gmail.com"><i class="fa-solid fa-envelope fa-lg"></i></a></li>
+        </ul>
+      </div>
     </footer>
     <script src="https://kit.fontawesome.com/bb970ecffe.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

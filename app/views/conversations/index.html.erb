@@ -1,5 +1,13 @@
 <h1>Conversations</h1>
+<div class="list-group">
+  <% @conversations.each do |conversation| %>
+    <% unread_count = conversation.messages.unread_from_sender(current_user).count %>
+    <% email_with_count = conversation.opposed_user(current_user).email + " (#{unread_count})" %>
+    <%= link_to conversation_path(conversation), class: 'list-group-item list-group-item-action' do %>
+      <%= content_tag(:span, email_with_count, class: "mr-2") %>
+      <%= content_tag(:span, "Unread", class: "badge badge-primary badge-pill") if unread_count > 0 %>
+    <% end %>
+  <% end %>
+</div>
+<%= paginate @conversations %>
 
-<% @conversations.each do |conversation| %>
-  <%= link_to conversation.opposed_user(current_user).email+'('+conversation.messages.unread_from_sender(current_user).count.to_s+')', conversation %>
-<% end %>

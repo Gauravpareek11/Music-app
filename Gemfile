@@ -30,6 +30,8 @@ gem 'jquery-rails'
 
 gem 'dotenv-rails'
 
+gem 'active_storage_validations'
+
 gem 'elasticsearch', '~> 7.17.7'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
@@ -44,10 +46,8 @@ gem 'omniauth-rails_csrf_protection'
 gem 'rubocop'
 
 gem 'kaminari'
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

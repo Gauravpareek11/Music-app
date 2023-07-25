@@ -3,10 +3,9 @@
 # This is sub_category_Spec
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe SubCategory, type: :model do
   describe 'validations' do
-    # subject { build(:sub_category) }
-
     it 'is valid with valid attributes' do
       item = FactoryBot.build(:sub_category)
       expect(item).to be_valid
@@ -24,4 +23,17 @@ RSpec.describe SubCategory, type: :model do
       expect(item).not_to be_valid
     end
   end
+  describe 'associations' do
+    it 'has many products with dependent destroy' do
+      association = described_class.reflect_on_association(:products)
+      expect(association.macro).to eq(:has_many)
+      expect(association.options[:dependent]).to eq(:destroy)
+    end
+
+    it 'belongs_to category' do
+      association = described_class.reflect_on_association(:category)
+      expect(association.macro).to eq(:belongs_to)
+    end
+  end
 end
+# rubocop:enable Metrics/BlockLength

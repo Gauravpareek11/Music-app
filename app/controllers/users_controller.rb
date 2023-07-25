@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :authorize, only: [:profile]
   before_action :show_data, only: [:profile]
   before_action :logged_in, except: [:profile]
+
   def new
     @user = User.new
   end
@@ -13,7 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to '/'
+      redirect_to '/', flash: { success: 'Signup Sucessfull' }
     else
       render :new
     end
@@ -21,8 +22,8 @@ class UsersController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
-    @posted_items = @user.products.where(role: 'Seller')
-    @posted_require = @user.products.where(role: 'Buyer')
+    @posted_items = @user.products.seller.page(params[:page]).per(10)
+    @posted_require = @user.products.buyer.page(params[:page]).per(10)
   end
 
   private

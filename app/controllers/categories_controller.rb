@@ -5,6 +5,8 @@ class CategoriesController < ApplicationController
   before_action :authorize
   before_action :restrict_user
   before_action :show_data
+  before_action :find_category, only: %i[edit update destroy]
+
   def index
     @category = Category.all
     @category = @category.page(params[:page]).per(10)
@@ -17,18 +19,15 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to '/', flash: { success: 'Item Created' }
+      redirect_to admin_categories_path, flash: { success: 'Category Created' }
     else
       render 'new'
     end
   end
 
-  def edit
-    @category = Category.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @category = Category.find(params[:id])
     if @category.update(category_params)
       redirect_to admin_categories_path, flash: { succes: 'Category updated successfully' }
     else
@@ -37,7 +36,6 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id])
     if @category.destroy
       redirect_to '/admin', flash: { success: 'Item destroyed Successfully' }
     else
@@ -49,5 +47,9 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:items)
+  end
+
+  def find_category
+    @category = Category.find(params[:id])
   end
 end

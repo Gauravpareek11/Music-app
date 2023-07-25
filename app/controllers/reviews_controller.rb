@@ -3,12 +3,13 @@
 # This is Reviews Controller
 class ReviewsController < ApplicationController
   before_action :find_product
+
   def create
     @review = @product.reviews.build(review_params)
     @review.user = current_user
 
     if @review.save
-      redirect_to @product, notice: 'Review created successfully.'
+      redirect_to @product, flash: { success: 'Review created successfully.' }
     else
       render 'products/show'
     end

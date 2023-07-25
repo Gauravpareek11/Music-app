@@ -59,7 +59,7 @@ footer {
   color: red;
   margin-left: 2px;
 }
-/* Customize the pagination links */
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -161,3 +161,64 @@ footer {
   border: 1px solid #ccc;
   margin-bottom: 10px;
 }
+/* Example CSS for customizing pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination > .page {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+}
+
+.pagination .current {
+  font-weight: bold;
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Additional CSS for customizing "next" and "prev" links */
+.pagination .prev,
+.pagination .first,
+.pagination .last,
+.pagination .next {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+}
+
+.pagination .prev.disabled,
+.pagination .first.disabled,
+.pagination .last.disabled,
+.pagination .next.disabled {
+  /* Styles for disabled "prev" and "next" links, e.g., when on the first or last page */
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.pagination .prev a,
+.pagination .first a,
+.pagination .last a,
+.pagination .next a {
+  /* Styles for "prev" and "next" links when they are active */
+  color: #007bff;
+  text-decoration: none;
+}
+
+.pagination .prev a:hover,
+.pagination .first a:hover,
+.pagination .last a:hover,
+.pagination .next a:hover {
+  /* Styles for "prev" and "next" links on hover */
+  background-color: #e6e6e6;
+}
+

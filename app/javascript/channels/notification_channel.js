@@ -53,6 +53,11 @@ document.addEventListener('turbolinks:load', () => {
           console.log("Connected to server")
         },
         received: function (data) {
+          const noNoti=document.getElementById('no-notification');
+          if(noNoti !== null){
+            console.log(noNoti)
+            noNoti.remove()
+          }
           messagesContainer.insertAdjacentHTML('beforeend', `<p>Hi I am Interested in your post</p>Name->${data['message'].name} Email->${data['message'].email}</p>`);
           var counterElement = document.getElementById('count-noti-badge')
           var counter = parseInt(counterElement.textContent)

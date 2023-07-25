@@ -15,11 +15,15 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/categories/:id/subcategories', to: 'products#sub_categories'
-  resources :admin do
+  resources :admin, except: %i[destroy] do
     resources :categories
     resources :sub_categories
     collection do
       get :pending_approvals
+      get :rejected
+    end
+    member do
+      put :reject_post
     end
   end
   resources :products, only: %i[show new create destroy] do
