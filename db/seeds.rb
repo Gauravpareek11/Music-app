@@ -108,7 +108,7 @@ end
 product7 = Product.create(title: 'Premium Digital Piano for Sale ',
                           description: 'Immerse yourself in the ethereal beauty of this exquisite harp, meticulously handcrafted to produce heavenly melodies that transport listeners to a world of enchantment and wonder.',
                           user_name: 'Mahfuz', phone_number: '8999999965', price: '7000', role: 'Seller', location: 'patna',
-                          user_id: user3.id, category_id: Category.first.id, sub_category_id: Category.second.sub_categories.second.id, approved_by: admin.id)
+                          user_id: user3.id, category_id: Category.second.id, sub_category_id: Category.second.sub_categories.second.id, approved_by: admin.id)
 image_paths = ['Digital_piano1.jpg', 'Digital_piano2.jpg']
 image_paths.each do |image_path|
   path = Rails.root.join('app', 'assets', 'images', image_path)
@@ -118,7 +118,7 @@ end
 product8 = Product.create(title: 'Stylish Electronic Guitar',
                           description: 'Immerse yourself in the ethereal beauty of this exquisite harp, meticulously handcrafted to produce heavenly melodies that transport listeners to a world of enchantment and wonder.',
                           user_name: 'Gaurav', phone_number: '8999999964', price: '5000', role: 'Buyer', location: 'patna',
-                          user_id: user1.id, category_id: Category.first.id, sub_category_id: Category.second.sub_categories.third.id, approved_by: admin.id)
+                          user_id: user1.id, category_id: Category.second.id, sub_category_id: Category.second.sub_categories.third.id, approved_by: admin.id)
 image_paths = ['electric-guitar1.jpg', 'electric-guitar2.jpg', 'electric-guitar3.jpg']
 image_paths.each do |image_path|
   path = Rails.root.join('app', 'assets', 'images', image_path)

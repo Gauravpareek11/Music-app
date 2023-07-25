@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/categories/:id/subcategories', to: 'products#sub_categories'
-  resources :admin, except: %i[destroy] do
-    resources :categories
-    resources :sub_categories
+  resources :admin, except: %i[destroy show] do
+    resources :categories, except: %i[show]
+    resources :sub_categories, except: %i[show]
     collection do
       get :pending_approvals
       get :rejected
@@ -44,5 +44,9 @@ Rails.application.routes.draw do
     end
   end
   mount ActionCable.server => '/cable'
+
+  match '*unmatched', to: 'application#not_found_method', via: :all, constraints: lambda { |req|
+    !req.path.match(%r{\A/rails/active_storage/})
+  }
 end
 # rubocop:enable Metrics/BlockLength

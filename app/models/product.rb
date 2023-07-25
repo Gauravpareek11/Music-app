@@ -13,16 +13,16 @@ class Product < ApplicationRecord
   has_many :reviews
   has_many_attached :images
 
-  validates :title, presence: { message: "Title can't be null" }
-  validates :description, presence: { message: "Description can't be null" }
+  validates :title, presence: { message: 'Title can\'t be null' }
+  validates :description, presence: { message: 'Description can\'t be null' }
   validates :phone_number, length: { minimum: 8, maximum: 10, message: 'Invalid phone number' },
-                           presence: { message: "Phone number can't be empty" },
+                           presence: { message: 'Phone number can\'t be empty' },
                            numericality: { greater_than: 0, message: 'Enter valid phone number' }
-  validates :user_name, presence: { message: "Name can't be null" }
-  validates :price, presence: { message: "Price can't be null" },
+  validates :user_name, presence: { message: 'Name can\'t be null' }
+  validates :price, presence: { message: 'Price can\'t be null' },
                     numericality: { greater_than: 0, message: 'Enter valid price' }
   validate :positive_number_validation
-  validates :location, presence: { message: "Location can't be null" }
+  validates :location, presence: { message: 'Location can\'t be null' }
   validates :images, content_type: {
     in: ['image/png', 'image/jpg', 'image/jpeg'],
     message: 'must be a PNG, JPG, or JPEG image'

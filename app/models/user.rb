@@ -16,11 +16,11 @@ class User < ApplicationRecord
   has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender_id'
   has_many :received_notifications, class_name: 'Notification', foreign_key: 'recipient_id'
 
-  validates :name, presence: { message: "Name Can't be empty" }
+  validates :name, presence: { message: 'Name Can\'t be empty' }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Invalid Email' },
                     uniqueness: { message: 'Already exist', case_sensitive: false },
-                    presence: { message: "Email can't be empty" }
-  validates :password_digest, presence: { message: "Password Can't be empty" }
+                    presence: { message: 'Email can\'t be empty' }
+  validates :password_digest, presence: { message: 'Password Can\'t be empty' }
 
   def self.from_omniauth(auth)
     user = find_by(email: auth.info.email)
