@@ -25,4 +25,12 @@ module ApplicationHelper
     count = current_user.received_notifications.where(read: false).count if current_user
     count
   end
+
+  def find_subcategory
+    Category.find(params[:category]).sub_categories.pluck(:items, :id)
+  end
+
+  def find_category
+    Category.pluck(:items, :id)
+  end
 end

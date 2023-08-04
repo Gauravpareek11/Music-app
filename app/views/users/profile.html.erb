@@ -55,31 +55,12 @@
     </div>
     <hr>
   <% end %>
-  <% if @user.admin?%>
+  <% if @user.admin? %>
     <%= link_to 'Categories',admin_categories_path(@user.id),class:"card-button"%>
     <%= link_to 'Sub_categories',admin_sub_categories_path(@user.id),class:"card-button"%>
-    <%= link_to 'pending_approvals',pending_approvals_admin_index_path(),class:"card-button"%>
+    <%= link_to 'pending_approvals',pending_approvals_admin_index_path,class:"card-button"%>
+  <% else %>
+    <%= link_to 'Your_posted_items',items_posted_path,class:"card-button"%>
+    <%= link_to 'Your_posted_requirements',requirements_posted_path,class:"card-button"%>
   <%end%>
 </div>
-<% unless @user.admin? %>
-  <% unless @user.products.seller.count %>
-    <h2 class="text-center">List of posted Instrumental Items</h2>
-    <div class="d-flex flex-wrap">
-      <% @posted_items.each do |item| %>
-        <%= render partial: 'welcomes/item_card', locals: { item: item } %>
-      <% end %>
-    </div>
-    <%= paginate @posted_items %>
-    <hr>
-  <% end %>
-  <% unless @user.products.buyer.count %>
-    <h2 class="text-center">List of requirements for Instruments Posted</h2>
-    <div class="d-flex flex-wrap">
-      <% @posted_require.each do |item| %>
-        <%= render partial: 'welcomes/item_card', locals: { item: item } %>
-      <% end %>
-    </div>
-    <%= paginate @posted_require %>
-    <hr>
-  <% end %>
-<% end %>

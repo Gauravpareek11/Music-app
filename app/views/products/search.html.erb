@@ -1,10 +1,14 @@
 <% unless @products.nil? %>
-  <h2>Filter Results</h2>
+  <h1>Filter Results</h1>
   <%= form_tag filter_products_path, method: :get do %>
     <%= label_tag :category, "Category" %>
-    <%= select_tag :category, options_for_select(Category.pluck(:items, :id)), {include_blank: true, class: 'category-select' } %>
+    <%= select_tag :category, options_for_select(find_category,params[:category]), { include_blank:'Please Select', class: 'category-select' } %>
     <%= label_tag :sub_category, "Sub Category" %>
-    <%= select_tag :sub_category, options_for_select([]), {include_blank: true, class: 'subcategory-select' } %>
+    <% if params[:category] && params[:category]!=''%>
+      <%= select_tag :sub_category, options_for_select(find_subcategory,params[:sub_category]), { include_blank:'Please Select',class: 'subcategory-select','data-default-sub-category'=>params[:sub_category]  } %>
+    <% else %>
+      <%= select_tag :sub_category, options_for_select([]), { class: 'subcategory-select','data-default-sub-category'=>params[:sub_category]  ,include_blank:'Please Select'} %>
+    <% end %>
     <%= text_field_tag :location, params[:location], placeholder: "Enter location" %>
     <%= submit_tag "Filter" %>
   <% end %>
@@ -13,10 +17,14 @@
       <h1>No posts found matching your query.</h1>
     <% else %>
       <h1>Search results</h1>
-      <div class="d-flex flex-wrap">
-        <% @products.each do |prod| %>
-          <%= render partial: 'welcomes/item_card', locals: { item: prod } %>
-        <% end %>
+      <div class="container">
+        <div class="row">
+          <% @products.each do |item|%>
+            <div class="col-md-4 mb-4">
+              <%= render partial: 'welcomes/item_card', locals: { item: item } %>
+            </div>
+          <% end %>
+        </div>
       </div>
       <%= paginate @products %>
     <% end %>

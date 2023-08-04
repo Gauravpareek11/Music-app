@@ -1,5 +1,5 @@
 <div class="mx-auto w-50 mt-4">
-  <%= form_with model: @sub_categories,url:admin_sub_category_path(current_user.id,@sub_categories.id),method: :put do |form| %>
+  <%= form_with model: @sub_categories,url:sub_category_path(@sub_categories.id),method: :put do |form| %>
     <div class="mb-3">
       <%= form.label :item,class:"form-label required" %><br>
       <%= form.text_field :items,class:"form-control",placeholder:"Enter Sub-Category Name" %>

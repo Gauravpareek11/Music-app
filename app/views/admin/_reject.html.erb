@@ -2,15 +2,17 @@
   <% if item.images.present? %>
     <%= image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px" %>
   <% else %>
-    <img src="<%= image_path('Image_not_available.png') %>",style = "height:300px">
+    <img src="<%= image_path('Image_not_available.png') %>" class="card-img-top" style="height: 300px;">
   <% end %>
   <div class="card-body">
-    <h5 class="card-title"><%= item.title%></h5>
-    <p class="card-text"><%= item.category.items+"(#{ item.sub_category.items })" %></p>
-    <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
-    <p class="card-text">posted by: <strong><%= item.user_name %></strong></p>
-    <p class="card-text">price:   <strong>&#8377;<%= item.price %></strong></p>
-    <p class="card-text">This item is rejected_by:<strong><%= item.rejected_by_user.name %></strong></p>
+    <div style="min-height: 18rem;">
+      <h5 class="card-title"><%= item.title%></h5>
+      <p class="card-text"><%= item.category.items+"(#{ item.sub_category.items })" %></p>
+      <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
+      <p class="card-text">posted by: <strong><%= item.user_name %></strong></p>
+      <p class="card-text">price:   <strong>&#8377;<%= item.price %></strong></p>
+      <p class="card-text">This item is rejected_by:<strong><%= item.rejected_by_user.name %></strong></p>
+    </div>
     <div class="d-flex justify-content-between">
       <%= link_to 'Approve',admin_path(item.id),method: :put,class:"card-button text-center mt-2" %>
       <a href="<%= product_path(item) %>" class="card-button view-more w-50 mt-2">view more</a>

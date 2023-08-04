@@ -16,7 +16,7 @@ class AdminController < ApplicationController
 
   def update
     if @items.update({ approved_by: current_user.id, rejected_by: nil })
-      redirect_to '/', flash: { success: 'Item Approved' }
+      redirect_to request.referer || root_url, flash: { success: 'Item Approved' }
     else
       render 'edit'
     end

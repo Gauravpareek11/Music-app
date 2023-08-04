@@ -2,19 +2,21 @@
   <% if item.images.present? %>
     <%=image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px"%>
   <% else %>
-    <img src="<%= image_path('Image_not_available.png') %>",style="height:300px">
+    <img src="<%= image_path('Image_not_available.png') %>" style="height:300px">
   <% end %>
   <div class="card-body">
-    <h5 class="card-title"><%= item.title%></h5>
-    <p class="card-text"><%= item.category.items+"(#{item.sub_category.items})" %></p>
-    <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
-    <p class="card-text">posted by: <strong><%= item.user_name%></strong></p>
-    <p class="card-text">price:   <strong>&#8377;<%= item.price%></strong></p>
+    <div style="min-height: 18rem;">
+      <h5 class="card-title"><%= item.title%></h5>
+      <p class="card-text"><%= item.category.items+"(#{item.sub_category.items})" %></p>
+      <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
+      <p class="card-text">posted by: <strong><%= item.user_name%></strong></p>
+      <p class="card-text">price:   <strong>&#8377;<%= item.price%></strong></p>
+    </div>
     <% if current_user %>
       <% if current_user&.admin? %>
         <% if !item.approved_by %>
           <div class="d-flex justify-content-between">
-            <%= link_to 'Approve',admin_path(item.id),method: :put,class:"card-button text-center",style: "width:40%" %>
+            <%= link_to 'Approve',admin_path(item.id),method: :put,class:"card-button text-center",id:"approve-btn",style: "width:40%" %>
             <%= link_to 'Reject',reject_post_admin_path(item.id),method: :put,data:{confirm: "Are you sure you want to reject"},class:"card-button text-center",style: "width:40%" %>
           </div>
         <% else %>
@@ -22,7 +24,7 @@
           </p>
         <%end%>
       <% else %>
-        <% unless item.user_id == current_user.id %>
+        <% if item.user_id != current_user.id %>
           <div class="d-flex justify-content-between">
             <div class="w-50">
               <%= form_with(model: Conversation.new, url: conversations_path) do |form| %>
@@ -41,9 +43,19 @@
               <% end %>
             </div>
           </div>
+        <% else %>
+          <% unless item.approved_by %>
+            <div class="d-flex justify-content-between">
+              <%= link_to 'edit',edit_product_path(item.id),class:"card-button text-center",id:"approve-btn",style: "width:40%" %>
+              <%= link_to 'Delete',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to Delete Post"},class:"card-button text-center",style: "width:40%" %>
+            </div>
+          <% end %>
         <% end %>
       <% end%>
       <div class="d-flex justify-content-center">
+        <% if item.approved_by && item.user_id == current_user.id %>
+          <%= link_to 'Delete',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to Delete Post"},class:"card-button text-center mt-2 mr-2",style: "width:40%" %>
+        <% end %>
         <a href="<%=product_path(item)%>" class="card-button view-more w-50 mt-2">view more</a>
       </div>
     <% end %>

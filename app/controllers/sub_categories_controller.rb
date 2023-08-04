@@ -19,7 +19,7 @@ class SubCategoriesController < ApplicationController
   def create
     @sub_categories = SubCategory.new(sub_category_params)
     if @sub_categories.save
-      redirect_to admin_sub_categories_path, flash: { success: 'SubCategory Created Sucessfully' }
+      redirect_to sub_categories_path, flash: { success: 'SubCategory Created Sucessfully' }
     else
       render 'new'
     end
@@ -29,7 +29,7 @@ class SubCategoriesController < ApplicationController
 
   def update
     if @sub_categories.update(sub_category_params)
-      redirect_to admin_sub_categories_path, flash: { success: 'Item updated Successfully' }
+      redirect_to sub_categories_path, flash: { success: 'Item updated Successfully' }
     else
       render 'edit'
     end
@@ -37,9 +37,9 @@ class SubCategoriesController < ApplicationController
 
   def destroy
     if @sub_categories.destroy
-      redirect_to admin_sub_categories_path, flash: { success: 'Item destroyed Successfully' }
+      redirect_to sub_categories_path, flash: { success: 'Item destroyed Successfully' }
     else
-      redirect_to admin_categories_path, flash: { error: 'Unable to process your request' }
+      redirect_to categories_path, flash: { error: 'Unable to process your request' }
     end
   end
 

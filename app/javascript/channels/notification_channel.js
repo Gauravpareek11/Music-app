@@ -1,17 +1,11 @@
 import consumer from '../channels/consumer'
-console.log('hi')
 document.addEventListener('turbolinks:load', () => {
-  console.log('hi')
   const senderId = document.getElementById('sender').dataset.senderId;
-  console.log(senderId)
   const messageForm=document.getElementsByClassName('noti-form');
   const messagesContainer=document.getElementById('notifications');
-  console.log(messagesContainer)
-  console.log(messageForm)
   Array.from(messageForm).forEach(function(form) {
-      console.log('form')
       form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
         
         const formData = new FormData(form);
         
@@ -63,10 +57,8 @@ document.addEventListener('turbolinks:load', () => {
           var counter = parseInt(counterElement.textContent)
           counter +=1
           counterElement.textContent = counter;
-          console.log(data)
         },
         speak: function (message) {
-          // console.log(message)
           return this.perform('receive', { sender_id: senderId,recipient_id: recieverId, message: message });
         }
       }

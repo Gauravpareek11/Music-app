@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email]&.downcase)
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to '/', notice: 'Succesfully logged in'
+      redirect_to '/', flash: { success: 'Successfully logged in' }
     else
       redirect_to '/login', flash: { error: 'Invalid email id or password' }
     end
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   def omni_create
     user = User.from_omniauth(request.env['omniauth.auth'])
     session[:user_id] = user.id
-    redirect_to root_path, notice: 'Signed in successfully.'
+    redirect_to root_path, flash: { success: 'Successfully logged in' }
   end
 
   def destroy

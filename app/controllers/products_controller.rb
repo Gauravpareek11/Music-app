@@ -26,6 +26,28 @@ class ProductsController < ApplicationController
     end
   end
 
+  def edit
+    @product = Product.find(params[:id])
+  end
+
+  def update
+    @product = Product.find(params[:id])
+    if @product.update(product_params)
+      redirect_to @product, flash: { success: 'Item Sucessfully Updated' }
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    if @product.destroy
+      redirect_to items_posted_path, flash: { success: 'Item Sucessfully deleted' }
+    else
+      redirect_to items_posted_path, flash: { success: 'There was a problem' }
+    end
+  end
+
   def sub_categories
     item = SubCategory.where(category_id: params[:id])
     render json: item

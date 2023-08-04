@@ -12,13 +12,13 @@
       <tr>
         <td><%=sub_category.items%></td>
         <td><%=sub_category.category.items%></td>
-        <td><%= link_to 'EDIT',edit_admin_sub_category_path(current_user.id,sub_category.id),class:"card-button"%></td>
-        <td><%= link_to 'Delete',admin_sub_category_path(current_user.id,sub_category.id),method: :delete,data:{confirm: "Are you sure you want to delete"},class:"card-button"%></td>
+        <td><%= link_to 'EDIT',edit_sub_category_path(sub_category.id),class:"card-button"%></td>
+        <td><%= link_to 'Delete',new_sub_category_path(sub_category.id),method: :delete,data:{confirm: "Are you sure you want to delete"},class:"card-button"%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= paginate @sub_categories %>
 <div class="d-flex justify-content-center">
-  <%= link_to 'Create Sub_Categories',new_admin_sub_category_path(@current_user.id),class:"card-button w-25 text-center"%>
+  <%= link_to 'Create Sub_Categories',new_sub_category_path,class:"card-button w-25 text-center"%>
 </div >

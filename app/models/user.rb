@@ -3,6 +3,7 @@
 # This is User Model
 class User < ApplicationRecord
   require 'securerandom'
+
   before_create :downcase_email
 
   has_secure_password

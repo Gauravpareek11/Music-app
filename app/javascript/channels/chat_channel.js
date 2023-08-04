@@ -1,7 +1,5 @@
 import consumer from '../channels/consumer'
-console.log('hi')
 document.addEventListener('turbolinks:load', () => {
-  console.log('hi')
   const conversationId = document.getElementById('conversation').dataset.conversationId;
   const messageInput = document.getElementById('message_body');
   const messagesContainer = document.getElementById('messages');
@@ -10,7 +8,7 @@ document.addEventListener('turbolinks:load', () => {
   if (messageForm) {
     console.log('form')
     messageForm.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent the default form submission
+      event.preventDefault();
       
       const formData = new FormData(messageForm);
       

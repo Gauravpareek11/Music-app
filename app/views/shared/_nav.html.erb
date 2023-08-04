@@ -1,4 +1,4 @@
-<% unless controller_name == 'sessions' ||  (controller_name == 'users' && action_name!='profile')%>
+<% unless controller_name == 'sessions' ||  (controller_name == 'users' && (action_name =='new' || action_name == 'create'))%>
   <nav class="navbar navbar-expand-md navbar-light bg-body-tertiary">
     <div class="container-xl">
       <a class="navbar-brand" href="<%= root_path %>">
@@ -26,10 +26,10 @@
           <% if current_user %>
             <% if current_user&.admin? %>
               <li class="nav-item mx-4">
-                <a class="nav-link" href="<%= admin_categories_path(current_user)%>">Categories</a>
+                <a class="nav-link" href="<%= categories_path %>">Categories</a>
               </li>
               <li class="nav-item mx-4">
-                <a class="nav-link" href="<%= admin_sub_categories_path(current_user)%>"> Sub Categories</a>
+                <a class="nav-link" href="<%= sub_categories_path %>"> Sub Categories</a>
               </li>
               <li class="nav-item mx-4">
                 <a class="nav-link" href="<%= pending_approvals_admin_index_path %>">Pending Approvals</a>
@@ -43,7 +43,7 @@
               </li>
             <% end %>
             <li class="nav-item mx-4">
-              <a class="nav-link" href="<%=profile_path(current_user)%>"><i class="fa fa-solid fa-user"></i></a>
+              <a class="nav-link" href="<%=profile_path%>"><i class="fa fa-solid fa-user"></i></a>
             </li>
           <% end %>
         </ul>

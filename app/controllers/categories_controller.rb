@@ -19,7 +19,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to admin_categories_path, flash: { success: 'Category Created' }
+      redirect_to categories_path, flash: { success: 'Category Created' }
     else
       render 'new'
     end
@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      redirect_to admin_categories_path, flash: { succes: 'Category updated successfully' }
+      redirect_to categories_path, flash: { succes: 'Category updated successfully' }
     else
       render 'edit'
     end
@@ -37,9 +37,9 @@ class CategoriesController < ApplicationController
 
   def destroy
     if @category.destroy
-      redirect_to '/admin', flash: { success: 'Item destroyed Successfully' }
+      redirect_to categories_path, flash: { success: 'Item destroyed Successfully' }
     else
-      redirect_to admin_categories_path, flash: { error: 'Unable to process your request' }
+      redirect_to categories_path, flash: { error: 'Unable to process your request' }
     end
   end
 

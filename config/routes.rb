@@ -9,15 +9,15 @@ Rails.application.routes.draw do
 
   get '/signup', to: 'users#new'
   post '/users', to: 'users#create'
-  get '/profile/:id', to: 'users#profile', as: 'profile'
+  get '/profile', to: 'users#profile', as: 'profile'
+  get '/your_items', to: 'users#your_items', as: 'items_posted'
+  get '/your_requirements', to: 'users#your_requirements', as: 'requirements_posted'
   get '/auth/google_oauth2/callback', to: 'sessions#omni_create'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/categories/:id/subcategories', to: 'products#sub_categories'
   resources :admin, except: %i[destroy show] do
-    resources :categories, except: %i[show]
-    resources :sub_categories, except: %i[show]
     collection do
       get :pending_approvals
       get :rejected
@@ -26,7 +26,11 @@ Rails.application.routes.draw do
       put :reject_post
     end
   end
-  resources :products, only: %i[show new create destroy] do
+  scope '/admin' do
+    resources :categories, except: %i[show]
+    resources :sub_categories, except: %i[show]
+  end
+  resources :products, except: %i[index] do
     resources :reviews, only: [:create]
     collection do
       get :buy

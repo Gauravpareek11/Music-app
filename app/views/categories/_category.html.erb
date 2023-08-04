@@ -10,13 +10,13 @@
     <% @category.each do |category| %>
       <tr>
         <td><%= category.items %></td>
-        <td><%= link_to 'EDIT',edit_admin_category_path(current_user.id,category.id),class:"card-button" %></td>
-        <td><%= link_to 'Delete',admin_category_path(current_user.id,category.id),method: :delete,data:{confirm: "Are you sure you want to delete"},class:"card-button" %></td>
+        <td><%= link_to 'EDIT',edit_category_path(category.id),class:"card-button" %></td>
+        <td><%= link_to 'Delete',category_path(category.id),method: :delete,data:{confirm: "Are you sure you want to delete"},class:"card-button" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= paginate @category %>
 <div class="d-flex justify-content-center">
-  <%= link_to 'Create Categories',new_admin_category_path(@current_user.id),class:"card-button w-25 text-center"%>
+  <%= link_to 'Create Categories',new_category_path,class:"card-button w-25 text-center"%>
 </div>

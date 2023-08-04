@@ -10,6 +10,7 @@ class Product < ApplicationRecord
   belongs_to :rejected_by_user, class_name: 'User', foreign_key: :rejected_by, optional: true
   belongs_to :category
   belongs_to :sub_category
+
   has_many :reviews
   has_many_attached :images
 
@@ -22,6 +23,8 @@ class Product < ApplicationRecord
   validates :price, presence: { message: 'Price can\'t be null' },
                     numericality: { greater_than: 0, message: 'Enter valid price' }
   validate :positive_number_validation
+  validates :category_id, presence: { message: 'Category can\'t be null' }
+  validates :sub_category_id, presence: { message: 'Sub Category can\'t be null' }
   validates :location, presence: { message: 'Location can\'t be null' }
   validates :images, content_type: {
     in: ['image/png', 'image/jpg', 'image/jpeg'],

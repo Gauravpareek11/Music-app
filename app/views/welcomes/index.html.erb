@@ -20,16 +20,24 @@
   </a>
 </div>
 <h2 class="display-2 text-center mb-4">List of posted Instrumental Items</h2>
-<div class="d-flex flex-wrap">
-  <% @items.each do |item|%>
-    <%= render partial: "item_card", locals: { item: item } %>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <% @items.each do |item| %>
+      <div class="col-md-4 mb-4">
+        <%= render partial: "item_card", locals: { item: item } %>
+      </div>
+    <% end %>
+  </div>
 </div>
 <h2 class="display-2 text-center mb-4">List of Required Instrumental Items</h2>
-<div class="d-flex flex-wrap">
-  <% @require.each do |item|%>
-    <%= render partial: "item_card", locals: { item: item } %>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <% @require.each do |item|%>
+      <div class="col-md-4 mb-4">
+        <%= render partial: "item_card", locals: { item: item } %>
+      </div>
+    <% end %>
+  </div>
 </div>
 <% if current_user %>
   <div id="sender" data-sender-id="<%=current_user.id%>"></div>

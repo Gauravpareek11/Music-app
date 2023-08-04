@@ -1,0 +1,15 @@
+<% if !@posted_require.empty? %>
+  <h2 class="display-2 text-center mb-4">List of Requirements Posted By You </h2>
+  <div class="container">
+    <div class="row">
+      <% @posted_require.each do |item|%>
+        <div class="col-md-4 mb-4">
+          <%= render partial: "welcomes/item_card", locals: { item: item } %>
+        </div>
+      <% end %>
+    </div>
+    <%= paginate @posted_require %>
+  </div>
+<% else %>
+  <h1 class="text-center"> You have not posted any item</h1>
+<% end %>
