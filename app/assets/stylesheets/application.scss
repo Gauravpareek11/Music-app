@@ -221,4 +221,7 @@ footer {
   /* Styles for "prev" and "next" links on hover */
   background-color: #e6e6e6;
 }
-
+.messages-container {
+  max-height: 500px; 
+  overflow-y: auto;
+}

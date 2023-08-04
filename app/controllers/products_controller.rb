@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   before_action :authorize, except: %i[search filter apply_filtering sub_categories]
   before_action :show_data
   before_action :restrict_admin, only: %i[new create]
-  skip_before_action :set_nil, only: %i[search filter apply_filtering sub_categories]
+  skip_before_action :set_nil, only: %i[search filter apply_filtering sub_categories show]
 
   def new
     @product = Product.new
@@ -84,7 +84,7 @@ class ProductsController < ApplicationController
   def apply_filtering(prod, params)
     prod = prod.where(category_id: params[:category]) if params[:category].present?
     prod = prod.where(sub_category_id: params[:sub_category]) if params[:sub_category].present?
-    prod = prod.where(location: params[:location]) if params[:location].present?
+    prod = prod.where('location ilike ?', "%#{params[:location]}%") if params[:location].present?
     prod
   end
 

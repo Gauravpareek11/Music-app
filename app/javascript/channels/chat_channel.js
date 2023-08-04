@@ -39,9 +39,7 @@ document.addEventListener('turbolinks:load', () => {
           
           const submitButton = document.querySelector("#message_submit")
           submitButton.disabled = false
-        },
-        speak: function (message) {
-          return this.perform('receive', { conversation_id: conversationId, message: message });
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
       }
     );

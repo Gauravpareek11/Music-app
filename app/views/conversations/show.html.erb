@@ -1,6 +1,7 @@
+<div class="container">
 <div class="ml-4">
-  <h1>Conversation with <%= @conversation.opposed_user(current_user).email %></h1>
-  <div id="messages">
+  <h1 class="text-center">Conversation with <%= @conversation.opposed_user(current_user).email %></h1>
+  <div id="messages" class="messages-container">
     <% @conversation.messages.each do |message| %>
       <p><strong><%= message.sender.email %>:</strong> <%= message.body %></p>
     <% end %>
@@ -9,5 +10,6 @@
     <%= form.text_field :body,id:'chat_message',class:"w-50",placeholder:"Enter a message" %>
     <%= form.submit "Send" ,id:'message_submit',class:"card-button"%>
   <% end %>
+</div>
 </div>
 <div id="conversation" data-conversation-id="<%= @conversation.id %>"></div>
