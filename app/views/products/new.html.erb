@@ -32,7 +32,11 @@
     </div>
     <div class="mb-3">
       <%= form.label :sub_category_id,class:"form-label required" %>
-      <%= form.collection_select :sub_category_id, [], :id, :items, {prompt: true}, {class: 'subcategory-select', disabled: true }%>
+      <% if @product.category_id && @product.category_id!=''%>
+        <%= select_tag :sub_category_id, options_for_select(prod_find_subcategory,@product.sub_category_id), { include_blank:'Please Select',class: 'subcategory-select','data-default-sub-category'=>@product.sub_category_id  } %>
+      <% else %>
+        <%= form.collection_select :sub_category_id, [], :id, :items, {prompt: true}, {class: 'subcategory-select', disabled: true }%>
+      <% end %>
       <p class='error'><%= show_errors(@product, :sub_category_id) %></p>
     </div>
     <div class="mb-3">
