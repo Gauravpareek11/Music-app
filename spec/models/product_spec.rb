@@ -131,6 +131,12 @@ RSpec.describe Product, type: :model do
       expect(Product.unapproved_buyers).to match_array(unapproved_buyers)
     end
 
+    it 'returns unapproved posts' do
+      unapproved_posts = Product.where(approved_by: nil, rejected_by: nil)
+
+      expect(Product.unapproved_posts).to match_array(unapproved_posts)
+    end
+
     it 'returns rejected sellers' do
       rejected_sellers = Product.where(approved_by: nil, role: 'Seller').where.not(rejected_by: nil)
 

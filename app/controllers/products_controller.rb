@@ -5,6 +5,8 @@ class ProductsController < ApplicationController
   before_action :authorize, except: %i[search filter apply_filtering sub_categories]
   before_action :show_data
   before_action :restrict_admin, only: %i[new create]
+  before_action :find_prod, only: %i[show edit update destroy]
+  before_action :edit_unapproved, only: %i[edit update]
   skip_before_action :set_nil, only: %i[search filter apply_filtering sub_categories show]
 
   def new
@@ -12,7 +14,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
     @reviews = @product.reviews.page(params[:page]).per(10)
   end
 
@@ -26,12 +27,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  def edit
-    @product = Product.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to @product, flash: { success: 'Item Sucessfully Updated' }
     else
@@ -40,11 +38,10 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
     if @product.destroy
       redirect_to items_posted_path, flash: { success: 'Item Sucessfully deleted' }
     else
-      redirect_to items_posted_path, flash: { success: 'There was a problem' }
+      redirect_to items_posted_path, flash: { error: 'There was a problem' }
     end
   end
 
@@ -69,7 +66,11 @@ class ProductsController < ApplicationController
     return unless query
 
     @products = Product.search_published(query.strip).records
-    @products = @products.page(params[:page]).per(10)
+    begin
+      @products = @products.page(params[:page]).per(10)
+    rescue StandardError
+      @products = []
+    end
     session[:item] = query
   end
 
@@ -93,5 +94,13 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(:title, :description, :sub_category_id, :category_id, :user_name, :phone_number,
                                     :price, :role, :location, :user_id, images: [])
+  end
+
+  def find_prod
+    @product = Product.find(params[:id])
+  end
+
+  def edit_unapproved
+    redirect_to root_path, flash: { error: 'You cannot edit approved post' } if @product.approved_by
   end
 end

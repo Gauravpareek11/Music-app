@@ -40,6 +40,7 @@ class Product < ApplicationRecord
                           }
   scope :unapproved_sellers, -> { where(approved_by: nil, rejected_by: nil, role: 'Seller') }
   scope :unapproved_buyers, -> { where(approved_by: nil, rejected_by: nil, role: 'Buyer') }
+  scope :unapproved_posts, -> { where(approved_by: nil, rejected_by: nil) }
   scope :rejected_sellers, -> { where(approved_by: nil, role: 'Seller').where.not(rejected_by: nil) }
   scope :rejected_buyers, -> { where(approved_by: nil, role: 'Buyer').where.not(rejected_by: nil) }
   scope :seller, -> { where(role: 'Seller', rejected_by: nil) }

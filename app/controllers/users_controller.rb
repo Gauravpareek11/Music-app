@@ -2,10 +2,10 @@
 
 # This is Users Controller
 class UsersController < ApplicationController
-  before_action :authorize, only: %i[profile your_items your_requirements]
-  before_action :show_data, only: %i[profile your_items your_requirements]
-  before_action :logged_in, except: %i[profile your_items your_requirements]
-  before_action :find_user, only: %i[profile your_items your_requirements]
+  before_action :authorize, only: %i[profile your_items your_requirements your_pending_approvals]
+  before_action :show_data, only: %i[profile your_items your_requirements your_pending_approvals]
+  before_action :logged_in, except: %i[profile your_items your_requirements your_pending_approvals]
+  before_action :find_user, only: %i[profile your_items your_requirements your_pending_approvals]
 
   def new
     @user = User.new
@@ -29,6 +29,10 @@ class UsersController < ApplicationController
 
   def your_requirements
     @posted_require = @user.products.buyer.page(params[:page]).per(10)
+  end
+
+  def your_pending_approvals
+    @pending_items = @user.products.unapproved_posts.page(params[:page]).per(10)
   end
 
   private

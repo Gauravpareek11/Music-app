@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post '/users', to: 'users#create'
   get '/profile', to: 'users#profile', as: 'profile'
   get '/your_items', to: 'users#your_items', as: 'items_posted'
+  get '/your_pending_items', to: 'users#your_pending_approvals', as: 'pending_items'
   get '/your_requirements', to: 'users#your_requirements', as: 'requirements_posted'
   get '/auth/google_oauth2/callback', to: 'sessions#omni_create'
   get '/login', to: 'sessions#new'
