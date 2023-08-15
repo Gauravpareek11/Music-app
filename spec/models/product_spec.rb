@@ -150,15 +150,15 @@ RSpec.describe Product, type: :model do
     end
 
     it 'returns sellers' do
-      sellers = Product.where(role: 'Seller', rejected_by: nil)
+      sellers = Product.where(role: 'Seller', rejected_by: nil).where.not(user_id: user.id)
 
-      expect(Product.seller).to match_array(sellers)
+      expect(Product.seller(user.id)).to match_array(sellers)
     end
 
     it 'returns buyers' do
-      buyers = Product.where(role: 'Buyer', rejected_by: nil)
+      buyers = Product.where(role: 'Buyer', rejected_by: nil).where.not(user_id: user.id)
 
-      expect(Product.buyer).to match_array(buyers)
+      expect(Product.buyer(user.id)).to match_array(buyers)
     end
   end
 end

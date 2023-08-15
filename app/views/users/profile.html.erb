@@ -30,14 +30,14 @@
       <div class="col-sm-3">
         <h6 class="mb-0">No of items posted</h6>
       </div>
-      <div class="col-sm-9 text-secondary"> <%= @user.products.seller.count %></div>
+      <div class="col-sm-9 text-secondary"> <%= @user.products.my_seller.count %></div>
     </div>
     <hr>
     <div class="row">
       <div class="col-sm-3">
         <h6 class="mb-0">No of Requirements posted</h6>
       </div>
-      <div class="col-sm-9 text-secondary"> <%= @user.products.buyer.count %></div>
+      <div class="col-sm-9 text-secondary"> <%= @user.products.my_buyer.count %></div>
     </div>
     <hr>
     <div class="row">
@@ -56,12 +56,12 @@
     <hr>
   <% end %>
   <% if @user.admin? %>
-    <%= link_to 'Categories',categories_path,class:"card-button"%>
-    <%= link_to 'Sub_categories',sub_categories_path,class:"card-button"%>
-    <%= link_to 'pending_approvals',pending_approvals_admin_index_path,class:"card-button"%>
+    <%= link_to 'Categories',categories_path,class:"card-button" %>
+    <%= link_to 'Sub_categories',sub_categories_path,class:"card-button" %>
+    <%= link_to 'pending_approvals',pending_approvals_admin_index_path,class:"card-button" %>
   <% else %>
-    <%= link_to 'Your_posted_items',items_posted_path,class:"card-button"%>
-    <%= link_to 'Your_posted_requirements',requirements_posted_path,class:"card-button"%>
-    <%= link_to 'Your_pending_posts',pending_items_path,class:"card-button"%>
-  <%end%>
+    <%= link_to 'Your_posted_items',items_posted_path,class:"card-button" %>
+    <%= link_to 'Your_posted_requirements',requirements_posted_path,class:"card-button" %>
+    <%= link_to 'Your_pending_posts',pending_items_path,class:"card-button" %>
+  <% end %>
 </div>

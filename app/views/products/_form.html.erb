@@ -1,0 +1,61 @@
+<div class="container w-50 mx-auto mt-3">
+  <%= form_with model: @product,url: path,method: method do |form| %>
+    <div class="mb-3">
+      <%= form.label :title,class:"form-label required" %>
+      <%= form.text_field :title,class:"form-control" %>
+      <p class='error'><%= show_errors(@product, :title) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :description,class:"form-label required"  %>
+      <%= form.text_area :description,class:"form-control" %>
+      <p class='error'><%= show_errors(@product, :description) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :user_name,class:"form-label required" %>
+      <%= form.text_field :user_name,class:"form-control" %>
+      <p class='error'><%= show_errors(@product, :user_name) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :phone_number,class:"form-label required" %>
+      <%= form.text_field :phone_number,class:"form-control" %>
+      <p class='error'><%= show_errors(@product, :phone_number) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :price,class:"form-label required" %>
+      <%= form.text_field :price,class:"form-control" %>
+      <p class='error'><%= show_errors(@product, :price) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :category_id,class:"form-label required" %>
+      <%= form.collection_select :category_id, Category.all, :id, :items,{ prompt: true }, { class: 'category-select' } %>
+      <p class='error'><%= show_errors(@product, :category_id) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :sub_category_id,class:"form-label required" %>
+      <% if @product.category_id && @product.category_id!=''%>
+        <%= form.collection_select :sub_category_id,sub_category_items,:id,:items,{prompt: true}, {class: 'subcategory-select' } %>
+      <% else %>
+        <%= form.collection_select :sub_category_id, [], :id, :items, {prompt: true}, {class: 'subcategory-select', disabled: true } %>
+      <% end %>
+      <p class='error'><%= show_errors(@product, :sub_category_id) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :location,class:"form-label required"  %><br>
+      <%= form.text_area :location,class:"form-control" %>
+      <p class='error'><%= show_errors(@product, :location) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :role,class:"form-label required" %>
+      <%= form.select :role,["Buyer","Seller"],{class:"form-control" }%>
+      <p class='error'><%= show_errors(@product, :role) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.label :images, "Image (PNG, JPG, JPEG, max 1MB)" %>
+      <%= form.file_field :images, multiple: true%>
+      <p class='error'><%= show_errors(@product, :images) %></p>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "#{create} Product",class:"btn btn-primary btn-lg sell-button"%>
+    </div>
+  <% end %>
+</div>

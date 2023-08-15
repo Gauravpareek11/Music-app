@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to '/', flash: { success: 'Signup Sucessfull' }
+      redirect_to root_path, flash: { success: 'Signup Sucessfull' }
     else
       render :new
     end
@@ -24,15 +24,21 @@ class UsersController < ApplicationController
   def profile; end
 
   def your_items
-    @posted_items = @user.products.seller.page(params[:page]).per(10)
+    @posted_items = @user.products.my_seller
+    @posted_items = apply_filtering(@posted_items, params)
+    @posted_items = @posted_items.page(params[:page]).per(10)
   end
 
   def your_requirements
-    @posted_require = @user.products.buyer.page(params[:page]).per(10)
+    @posted_require = @user.products.my_buyer
+    @posted_require = apply_filtering(@posted_require, params)
+    @posted_require = @posted_require.page(params[:page]).per(10)
   end
 
   def your_pending_approvals
-    @pending_items = @user.products.unapproved_posts.page(params[:page]).per(10)
+    @pending_items = @user.products.unapproved_posts
+    @pending_items = apply_filtering(@pending_items, params)
+    @pending_items = @pending_items.page(params[:page]).per(10)
   end
 
   private

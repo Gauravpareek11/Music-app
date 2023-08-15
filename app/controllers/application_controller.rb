@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    redirect_to '/login', flash: { success: 'Please signIn' } unless current_user
+    redirect_to login_path, flash: { success: 'Please Sign In' } unless current_user
   end
 
   def admin?
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_user
-    redirect_to '/', flash: { error: 'Not Admin' } unless admin?
+    redirect_to root_path, flash: { error: 'Not Admin' } unless admin?
   end
 
   def show_data
@@ -36,14 +36,21 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in
-    redirect_to '/', flash: { error: 'Already Signed In' } if current_user
+    redirect_to root_path, flash: { error: 'Already Signed In' } if current_user
   end
 
   def restrict_admin
-    redirect_to '/', flash: { error: 'Admin Not allowed' } if admin?
+    redirect_to root_path, flash: { error: 'Admin Not allowed' } if admin?
   end
 
   def set_nil
     session[:item] = nil
+  end
+
+  def apply_filtering(prod, params)
+    prod = prod.where(category_id: params[:category]) if params[:category].present?
+    prod = prod.where(sub_category_id: params[:sub_category]) if params[:sub_category].present?
+    prod = prod.where('location ilike ?', "%#{params[:location]}%") if params[:location].present?
+    prod
   end
 end

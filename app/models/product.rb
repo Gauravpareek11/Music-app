@@ -43,8 +43,10 @@ class Product < ApplicationRecord
   scope :unapproved_posts, -> { where(approved_by: nil, rejected_by: nil) }
   scope :rejected_sellers, -> { where(approved_by: nil, role: 'Seller').where.not(rejected_by: nil) }
   scope :rejected_buyers, -> { where(approved_by: nil, role: 'Buyer').where.not(rejected_by: nil) }
-  scope :seller, -> { where(role: 'Seller', rejected_by: nil) }
-  scope :buyer, -> { where(role: 'Buyer', rejected_by: nil) }
+  scope :seller, ->(id) { where(role: 'Seller', rejected_by: nil).where.not(user_id: id) }
+  scope :buyer, ->(id) { where(role: 'Buyer', rejected_by: nil).where.not(user_id: id) }
+  scope :my_seller, -> { where(role: 'Seller', rejected_by: nil) }
+  scope :my_buyer, -> { where(role: 'Buyer', rejected_by: nil) }
 
   def positive_number_validation
     return if price.blank?

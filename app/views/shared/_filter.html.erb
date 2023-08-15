@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Filter Results</h1>
+      <%= form_tag filter_path, method: :get, class: "form-inline" do %>
+        <div class="form-group p-2">
+          <%= label_tag :category, "Category",class:"mr-2" %>
+          <%= select_tag :category, options_for_select(find_category, params[:category]), { include_blank: 'Please Select', class: 'form-control category-select' } %>
+        </div>
+        <div class="form-group p-2">
+          <%= label_tag :sub_category, "Sub Category",class:"mr-2" %>
+          <% if params[:category] && params[:category] != '' %>
+            <%= select_tag :sub_category, options_for_select(find_subcategory, params[:sub_category]), { include_blank: 'Please Select', class: 'form-control subcategory-select' } %>
+          <% else %>
+            <%= select_tag :sub_category, options_for_select([]), { class: 'form-control subcategory-select', include_blank: 'Please Select' } %>
+          <% end %>
+        </div>
+        <div class="form-group p-2">
+          <%= label_tag :location, "Location",class:"mr-2" %>
+          <%= text_field_tag :location, params[:location], class: "form-control", placeholder: "Enter location" %>
+        </div>
+        <div class="form-group p-2">
+          <%= submit_tag "Filter", class:"card-button" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

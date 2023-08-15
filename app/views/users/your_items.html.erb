@@ -1,8 +1,9 @@
+<%= render partial: 'shared/filter', locals: { filter_path: items_posted_path } %>
 <% if !@posted_items.empty? %>
   <h2 class="display-2 text-center mb-4">List of Items Posted By You </h2>
   <div class="container">
     <div class="row">
-      <% @posted_items.each do |item|%>
+      <% @posted_items.each do |item| %>
         <div class="col-md-4 mb-4">
           <%= render partial: "welcomes/item_card", locals: { item: item } %>
         </div>

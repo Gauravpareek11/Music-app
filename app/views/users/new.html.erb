@@ -23,9 +23,9 @@
     </div>
     <%= f.submit "Submit" ,class:"card-button w-100 d-block text-center mb-2"%>
   <% end %>
-  <%= link_to '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token,class:"d-block card-button mb-2 w-100 text-center" do%>
+  <%= link_to '/auth/google_oauth2',method: :post,authenticity_token: form_authenticity_token,class:"d-block card-button mb-2 w-100 text-center" do %>
     <i class="fa-brands fa-google"></i> Sign in with Google
   <% end %>
-  <%= link_to 'Existing User! Login','/login',class:"d-block card-button mb-2 w-100 text-center"%>
-  <%= link_to 'Home Page','/',class:"d-block card-button w-100 text-center"%>
+  <%= link_to 'Existing User! Login','/login',class:"d-block card-button mb-2 w-100 text-center" %>
+  <%= link_to 'Home Page','/',class:"d-block card-button w-100 text-center" %>
 </div>

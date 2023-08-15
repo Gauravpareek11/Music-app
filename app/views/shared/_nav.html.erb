@@ -18,7 +18,7 @@
           <li class="nav-item mx-4">
             <a class="nav-link" href="<%= sell_products_path%>">Buyer Requirements</a>
           </li>
-          <% unless current_user&.admin?%>
+          <% unless current_user&.admin? %>
             <li class="nav-item mx-4">
               <a class="nav-link" href="<%=new_product_path%>">Post AD</a>
             </li>
@@ -62,7 +62,6 @@
       </div>
     </div>
   </nav>
-  <!-- Button trigger modal -->
   <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
       <div class="modal-content">

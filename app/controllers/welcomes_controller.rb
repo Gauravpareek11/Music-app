@@ -6,11 +6,21 @@ class WelcomesController < ApplicationController
 
   def index
     if current_user&.admin?
-      @items = Product.seller.limit(8)
-      @require = Product.buyer.limit(8)
+      load_admin_items
     else
-      @items = Product.approved_sellers(current_user&.id).limit(8)
-      @require = Product.approved_buyers(current_user&.id).limit(8)
+      load_user_items
     end
+  end
+
+  private
+
+  def load_admin_items
+    @items = Product.seller(current_user&.id).limit(8)
+    @require = Product.buyer(current_user&.id).limit(8)
+  end
+
+  def load_user_items
+    @items = Product.approved_sellers(current_user&.id).limit(8)
+    @require = Product.approved_buyers(current_user&.id).limit(8)
   end
 end

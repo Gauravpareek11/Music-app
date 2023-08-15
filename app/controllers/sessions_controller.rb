@@ -11,9 +11,9 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email]&.downcase)
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to '/', flash: { success: 'Successfully logged in' }
+      redirect_to root_path, flash: { success: 'Successfully logged in' }
     else
-      redirect_to '/login', flash: { error: 'Invalid email id or password' }
+      redirect_to login_path, flash: { error: 'Invalid email id or password' }
     end
   end
 
@@ -25,6 +25,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to '/login', flash: { success: 'You are successfully logged out' }
+    redirect_to login_path, flash: { success: 'You are successfully logged out' }
   end
 end

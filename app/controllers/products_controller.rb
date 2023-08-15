@@ -2,7 +2,7 @@
 
 # This is Products Controller
 class ProductsController < ApplicationController
-  before_action :authorize, except: %i[search filter apply_filtering sub_categories]
+  before_action :authorize, except: %i[search filter apply_filtering sub_categories buy sell]
   before_action :show_data
   before_action :restrict_admin, only: %i[new create]
   before_action :find_prod, only: %i[show edit update destroy]
@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     @product[:user_id] = current_user.id
     if @product.save
-      redirect_to '/', flash: { success: 'Item Posted It will be public after Admin\'s Approval' }
+      redirect_to root_path, flash: { success: 'Item Posted It will be public after Admin\'s Approval' }
     else
       render 'new'
     end
@@ -51,12 +51,14 @@ class ProductsController < ApplicationController
   end
 
   def buy
-    @items = current_user&.admin? ? Product.seller : Product.approved_sellers(current_user&.id)
+    @items = Product.seller(current_user&.id)
+    @items = apply_filtering(@items, params)
     @items = @items.page(params[:page]).per(10)
   end
 
   def sell
-    @items = current_user&.admin? ? Product.buyer : Product.approved_buyers(current_user&.id)
+    @items = Product.buyer(current_user&.id)
+    @items = apply_filtering(@items, params)
     @items = @items.page(params[:page]).per(10)
   end
 
@@ -80,13 +82,6 @@ class ProductsController < ApplicationController
     @products = apply_filtering(prod, params)
     @products = @products.page(params[:page]).per(10)
     render :search
-  end
-
-  def apply_filtering(prod, params)
-    prod = prod.where(category_id: params[:category]) if params[:category].present?
-    prod = prod.where(sub_category_id: params[:sub_category]) if params[:sub_category].present?
-    prod = prod.where('location ilike ?', "%#{params[:location]}%") if params[:location].present?
-    prod
   end
 
   private

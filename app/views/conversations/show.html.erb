@@ -8,7 +8,7 @@
   </div>
   <%= form_with(model: [@conversation, @message], url: conversation_messages_path(@conversation),remote: true,id:'form') do |form| %>
     <%= form.text_field :body,id:'chat_message',class:"w-50",placeholder:"Enter a message" %>
-    <%= form.submit "Send" ,id:'message_submit',class:"card-button"%>
+    <%= form.submit "Send" ,id:'message_submit',class:"card-button" %>
   <% end %>
 </div>
 </div>

@@ -33,5 +33,5 @@ def restrict_messages
   @id = Conversation.find(params[:id])
   return unless @id.sender_id != current_user.id && @id.recipient_id != current_user.id
 
-  redirect_to '/', flash: { error: 'Cannot show messages' }
+  redirect_to root_path, flash: { error: 'Cannot show messages' }
 end

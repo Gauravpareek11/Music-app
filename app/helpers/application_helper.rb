@@ -34,6 +34,10 @@ module ApplicationHelper
     Category.find(@product.category_id).sub_categories.pluck(:items, :id)
   end
 
+  def sub_category_items
+    Category.find(@product.category_id).sub_categories
+  end
+
   def find_category
     Category.pluck(:items, :id)
   end

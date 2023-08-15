@@ -1,12 +1,1 @@
-<div class="mx-auto w-50 mt-4">
-  <%= form_with model: @category,url: category_path(@category.id),method: :put do |form| %>
-    <div class="mb-3">
-      <%= form.label :items,class:"form-label required" %><br>
-      <%= form.text_field :items,class:"form-control",placeholder:"Enter a Category Name" %>
-      <p class='error'><%= show_errors(@category, :items) %></p>
-    </div>
-    <div>
-      <%= form.submit 'Update Category',class:"card-button" %>
-    </div>
-  <% end %>
-</div>
+<%= render partial: 'form', locals: { create: "Update" } %>

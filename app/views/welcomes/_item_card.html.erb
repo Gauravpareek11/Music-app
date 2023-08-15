@@ -1,6 +1,6 @@
-<div class="card mx-2 my-2" style="width: 18rem;">
+<div class="card mx-2 my-2" style="width: 20rem;">
   <% if item.images.present? %>
-    <%=image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px"%>
+    <%= image_tag item.images.first,class:"card-img-top" ,alt:"card-thumbnail",style:"height:300px" %>
   <% else %>
     <img src="<%= image_path('Image_not_available.png') %>" style="height:300px">
   <% end %>
@@ -9,8 +9,9 @@
       <h5 class="card-title"><%= item.title%></h5>
       <p class="card-text"><%= item.category.items+"(#{item.sub_category.items})" %></p>
       <p class="card-text"><%= truncate(item.description, length: 50, omission: '...') %></p>
-      <p class="card-text">posted by: <strong><%= item.user_name%></strong></p>
-      <p class="card-text">price:   <strong>&#8377;<%= item.price%></strong></p>
+      <p class="card-text">posted by: <strong><%= item.user_name %></strong></p>
+      <p class="card-text">Location: <strong><%= item.location %></strong></p>
+      <p class="card-text">price:   <strong>&#8377;<%= item.price %></strong></p>
     </div>
     <% if current_user %>
       <% if current_user&.admin? %>
@@ -52,12 +53,12 @@
           <% end %>
         <% end %>
       <% end%>
-      <div class="d-flex justify-content-center">
-        <% if item.approved_by && item.user_id == current_user.id %>
-          <%= link_to 'Delete',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to Delete Post"},class:"card-button text-center mt-2 mr-2",style: "width:40%" %>
-        <% end %>
-        <a href="<%=product_path(item)%>" class="card-button view-more w-50 mt-2">view more</a>
-      </div>
     <% end %>
+    <div class="d-flex justify-content-center">
+      <% if item.approved_by && item.user_id == current_user&.id %>
+        <%= link_to 'Delete',product_path(item.id),method: :delete,data:{confirm: "Are you sure you want to Delete Post"},class:"card-button text-center mt-2 mr-2",style: "width:40%" %>
+      <% end %>
+      <a href="<%= product_path(item) %>" class="card-button view-more w-50 mt-2">view more</a>
+    </div>
   </div>
 </div>

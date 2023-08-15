@@ -9,6 +9,7 @@ class SubCategoriesController < ApplicationController
 
   def index
     @sub_categories = SubCategory.all
+    @sub_categories = apply_filtering(@sub_categories, params)
     @sub_categories = @sub_categories.page(params[:page]).per(10)
   end
 
